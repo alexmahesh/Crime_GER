@@ -4,7 +4,8 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
-import sqlalchemy
+# import sqlalchemy
+import psycopg2
 
 
 
@@ -40,12 +41,34 @@ elif not st.session_state['logged_in']:
 #     Only visible after log-in
 if st.session_state['logged_in']:
     
-    @st.cache_data
-    def get_dataframe(query):
-        con = sqlalchemy.create_engine('postgresql://user:pass@host/database', connect_args=st.secrets.azure_db)
-        df = pd.read_sql_query(sql=query, con=con)
-        return df
+    # @st.cache_data
+    # def get_dataframe(query):
+    #     con = sqlalchemy.create_engine('postgresql://user:pass@host/database', connect_args=st.secrets.azure_db)
+    #     df = pd.read_sql_query(sql=query, con=con)
+    #     return df
     
-    df_grund_bund = get_dataframe("select * from public.bund_grund_2022_until_2018 limit 10;")
-    df_grund_bund
+    # df_grund_bund = get_dataframe("select * from public.bund_grund_2022_until_2018 limit 10;")
+    # df_grund_bund
 
+
+
+    con = psycopg2.connect(
+        host = st.secrets.azure_db['host'],
+        port = st.secrets.azure_db['port'],
+        database = st.secrets.azure_db['database'],
+        user = st.secrets.azure_db['user'],
+        password = st.secrets.azure_db['password']
+    )
+    cur = con.cursor()
+
+    query = 'select * from public.bund_grund_2022_until_2018 LIMIT 10'
+    cur.execute(query)
+    res = cur.fetchall()
+
+    df = pd.DataFrame(res)
+    df
+    # for line in res:
+    #     st.write(line)
+
+    cur.close()
+    con.close()
