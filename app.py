@@ -1,12 +1,20 @@
 
 # Import the needed libraries
-import pandas as pd
 import streamlit as st
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-# import sqlalchemy
+import geopandas as gpd
 import psycopg2
 
+st.set_page_config(
+    page_title = 'Crime in Germany', 
+    page_icon = '👮', 
+    layout = "wide", # or 'centered'
+    initial_sidebar_state = "auto", 
+    menu_items = {'About':'''Capstone Project from neuefische Bootcamp.  
+                  Johanna Köpke, Julie Laur & Alexander Schuppe.'''}
+)
 
 
 # Protect Dashboard with a simple password mechanism
@@ -41,34 +49,41 @@ elif not st.session_state['logged_in']:
 #     Only visible after log-in
 if st.session_state['logged_in']:
     
-    # @st.cache_data
-    # def get_dataframe(query):
-    #     con = sqlalchemy.create_engine('postgresql://user:pass@host/database', connect_args=st.secrets.azure_db)
-    #     df = pd.read_sql_query(sql=query, con=con)
-    #     return df
+
+    @st.cache_data
+    def get_dataframe(query):
+        '''
+        Make a query in the database and
+        return the result as a pandas dataframe.
+        '''
+        con = psycopg2.connect(
+            host = st.secrets.azure_db['host'],
+            port = st.secrets.azure_db['port'],
+            database = st.secrets.azure_db['database'],
+            user = st.secrets.azure_db['user'],
+            password = st.secrets.azure_db['password']
+        )
+        cur = con.cursor()
+        cur.execute(query)
+        result = cur.fetchall()
+        cur.close()
+        con.close()
+        return pd.DataFrame(result)
     
-    # df_grund_bund = get_dataframe("select * from public.bund_grund_2022_until_2018 limit 10;")
+
+    # query = 'select * from public.bund_grund_2022_until_2018 LIMIT 10'
+    # df_grund_bund = get_dataframe(query)
     # df_grund_bund
 
 
+    query = '''
+        select schluessel, straftat, bundesland, anzahl_erfasste_faelle, year
+        from public.laender_grund_2022_until_2018
+        where schluessel = '------'
+        and bundesland != 'Bundesrepublik Deutschland';
+    '''
+    df_crimes_bundeslaender = get_dataframe(query)
+    df_crimes_bundeslaender.columns = ['schluessel', 'straftat', 'bundesland', 'anzahl_erfasste_faelle', 'year']
 
-    con = psycopg2.connect(
-        host = st.secrets.azure_db['host'],
-        port = st.secrets.azure_db['port'],
-        database = st.secrets.azure_db['database'],
-        user = st.secrets.azure_db['user'],
-        password = st.secrets.azure_db['password']
-    )
-    cur = con.cursor()
-
-    query = 'select * from public.bund_grund_2022_until_2018 LIMIT 10'
-    cur.execute(query)
-    res = cur.fetchall()
-
-    df = pd.DataFrame(res)
-    df
-    # for line in res:
-    #     st.write(line)
-
-    cur.close()
-    con.close()
+    
+    
