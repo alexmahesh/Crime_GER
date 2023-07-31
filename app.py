@@ -5,7 +5,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 import sqlalchemy
-from dotenv import dotenv_values
+
 
 
 # Protect Dashboard with a simple password mechanism
@@ -40,29 +40,12 @@ elif not st.session_state['logged_in']:
 #     Only visible after log-in
 if st.session_state['logged_in']:
     
-
-    @st.cache_resource
-    def init_db_connection():
-        '''
-        Makes the connection to the database and returns the 
-        connection object.
-        '''
-        cred = st.secrets.azure_db
-        return sqlalchemy.create_engine('postgresql://user:pass@host/database', connect_args=cred)
-
-    # Create connection-object for the database to be used with all following queries
-    con = init_db_connection()
-
-
-    @st.cache_data(ttl=3600)
+    @st.cache_data
     def get_dataframe(query):
-        '''
-        Queries the Database and returns the result as a pandas dataframe.
-        '''
-        df = pd.read_sql_query(query, con)
+        con = sqlalchemy.create_engine('postgresql://user:pass@host/database', connect_args=st.secrets.azure_db)
+        df = pd.read_sql_query(sql=query, con=con)
         return df
     
+    df_grund_bund = get_dataframe("select * from public.bund_grund_2022_until_2018 limit 10;")
+    df_grund_bund
 
-    # Show Bund_Grund Table
-    df_bund_grund = get_dataframe("select * from public.bund_grund_2022_until_2018 limit 10;")
-    df_bund_grund
