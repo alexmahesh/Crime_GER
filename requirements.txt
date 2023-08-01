@@ -5,5 +5,3 @@ matplotlib
 seaborn
 plotly
 psycopg2-binary
-folium
-streamlit-folium
