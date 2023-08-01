@@ -13,7 +13,7 @@ st.set_page_config(
     page_title = 'Crime in Germany', 
     page_icon = '👮', 
     layout = "wide", # or 'centered'
-    initial_sidebar_state = "auto", 
+    initial_sidebar_state = "auto", #"collapsed"
     menu_items = {'About':'''Capstone Project from neuefische Bootcamp.  
                   Johanna Köpke, Julie Laur & Alexander Schuppe.'''}
 )
@@ -76,6 +76,11 @@ if st.session_state['logged_in']:
         return pd.DataFrame(result)
     
 
+    st.subheader('Crime in Germany')
+    st.markdown('#### Distribution and Frequency Development')
+    st.divider()
+
+
     # Load needed Dataframe
     query = '''
         select schluessel, straftat, bundesland, anzahl_erfasste_faelle, year
@@ -124,3 +129,17 @@ if st.session_state['logged_in']:
     st.plotly_chart(fig2)
 
     
+    with st.sidebar:
+        st.subheader('Dashboard Controls')
+        year = st.slider('🗓 Year', min_value=2018, max_value=2022, value=2022)
+        state = st.selectbox('🇩🇪 State', df_crimes_bundeslaender['bundesland'])
+        gender = st.radio('☯️ Gender', ['All', 'Female', 'Male'])
+        st.button('☀️ Reset')
+        st.divider()
+        st.markdown('#### 👋 Interested in us?')
+        st.markdown('''Johanna Köpke  
+                    Julie Laur  
+                    Alexander Schuppe  ''')
+        st.divider()
+        st.caption('Impressum')
+
