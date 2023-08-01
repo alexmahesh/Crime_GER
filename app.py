@@ -6,9 +6,8 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
-import folium
-from streamlit_folium import folium_static
 import psycopg2
+import json
 
 st.set_page_config(
     page_title = 'Crime in Germany', 
@@ -34,18 +33,18 @@ def check_password():
         st.session_state['logged_in'] = False
     del st.session_state['password'] # delete entered password
 
-# # Show the input field for the password
-# if 'logged_in' not in st.session_state:
-#     # The very first run of the app, no password entered yet
-#     st.session_state['logged_in'] = False
-#     st.text_input('Password', type='password', on_change=check_password, key='password')
-# elif not st.session_state['logged_in']:
-#     # User has input wrong password
-#     st.text_input('Password', type='password', on_change=check_password, key='password')
-#     st.error('🧐 Wrong Password')
+# Show the input field for the password
+if 'logged_in' not in st.session_state:
+    # The very first run of the app, no password entered yet
+    st.session_state['logged_in'] = False
+    st.text_input('Password', type='password', on_change=check_password, key='password')
+elif not st.session_state['logged_in']:
+    # User has input wrong password
+    st.text_input('Password', type='password', on_change=check_password, key='password')
+    st.error('🧐 Wrong Password')
 
 # Remove after end of development and uncomment upper block
-st.session_state['logged_in'] = True
+# st.session_state['logged_in'] = True
 
 
 
@@ -77,43 +76,51 @@ if st.session_state['logged_in']:
         return pd.DataFrame(result)
     
 
-    # query = 'select * from public.bund_grund_2022_until_2018 LIMIT 10'
-    # df_grund_bund = get_dataframe(query)
-    # df_grund_bund
-
-
+    # Load needed Dataframe
     query = '''
         select schluessel, straftat, bundesland, anzahl_erfasste_faelle, year
         from public.laender_grund_2022_until_2018
         where schluessel = '------'
-        and bundesland != 'Bundesrepublik Deutschland';
+        and bundesland != 'Bundesrepublik Deutschland'
+        and year = '2022';
     '''
     df_crimes_bundeslaender = get_dataframe(query)
     df_crimes_bundeslaender.columns = ['schluessel', 'straftat', 'bundesland', 'anzahl_erfasste_faelle', 'year']
-    
-    
-    df_map_bundeslaender = gpd.read_file('data/bundeslaender.json')
-    df_map_bundeslaender.rename(columns={'GEN':'bundesland'}, inplace=True)
-    
+    st.write(df_crimes_bundeslaender)
 
-    df_map_crimes_bundeslaender = df_map_bundeslaender.merge(df_crimes_bundeslaender, on='bundesland')
-    df_tmp = df_map_crimes_bundeslaender[df_map_crimes_bundeslaender['year']=='2022']
-    st.write(df_tmp.head(2))
-
-    
-    
-
-    m = folium.Map(
-        location = [52.52, 13.4],
-        tiles = 'OpenStreetMap', # 'CartoDB positron'
-        zoom_start = 6,
+    # Make Bar-Chart from Dataframe
+    fig = px.bar(
+        df_crimes_bundeslaender,
+        x = df_crimes_bundeslaender['bundesland'],
+        y = df_crimes_bundeslaender['anzahl_erfasste_faelle'],
+        hover_name = 'bundesland',
+        hover_data = {'bundesland':False},
+        labels = {'bundesland':'State', 'anzahl_erfasste_faelle':'Crimes'},
+        title = 'Crimes per State in 2022'
     )
+    fig.update_xaxes(tickangle=-90)
+    # fig.show()
+    st.plotly_chart(fig)
 
-    folium.Marker(
-        [52.52, 13.4],
-        popup = "Berlin",
-        tooltip = 'Click me',
-        icon = folium.Icon(color='red', icon = 'info-sign')
-    ).add_to(m)
-        
-    folium_static(m, width=900, height=550)
+    # Make Map for german states
+    # Load Geo-Data for states
+    with open('data/bundeslaender_polygons.json') as response:
+        geo_data = json.load(response)
+    # Create Map
+    fig2 = px.choropleth(
+        df_crimes_bundeslaender, # Crime data
+        locations = 'bundesland', #column in dataframe
+        geojson = geo_data, #geodata in geoJSON format
+        featureidkey = 'properties.NAME_1', #key that merges to dataframe
+        color = 'anzahl_erfasste_faelle', #in dataframe
+        labels = {'bundesland':'State', 'anzahl_erfasste_faelle':'Crimes'},
+        hover_name = 'bundesland',
+        hover_data = {'bundesland':False},
+        title = 'Crime in Germany',
+    )
+    fig2.update_geos(fitbounds='locations', visible=False)
+    #fitbounds: zoomt in die Karte, 
+    #visible:False blendet alles andere von der Karte aus
+    st.plotly_chart(fig2)
+
+    
