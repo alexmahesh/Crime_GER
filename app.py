@@ -9,6 +9,8 @@ import plotly.express as px
 import psycopg2
 import json
 
+#Configure Layout
+
 st.set_page_config(
     page_title = 'Crime in Germany', 
     page_icon = '👮', 
@@ -17,6 +19,18 @@ st.set_page_config(
     menu_items = {'About':'''Capstone Project from neuefische Bootcamp.  
                   Johanna Köpke, Julie Laur & Alexander Schuppe.'''}
 )
+
+st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 1rem;
+                    padding-bottom: 0rem;
+                    padding-left: 2.5rem;
+                    padding-right: 5rem;
+                }
+        </style>
+        """, unsafe_allow_html=True)
+
 
 
 # Protect Dashboard with a simple password mechanism
@@ -80,32 +94,35 @@ if st.session_state['logged_in']:
     st.markdown('#### Distribution and Frequency Development')
     st.divider()
 
+    col1, col2 = st.columns([0.35, 0.65])
 
-    # Load needed Dataframe
-    query = '''
-        select schluessel, straftat, bundesland, anzahl_erfasste_faelle, year
-        from public.laender_grund_2022_until_2018
-        where schluessel = '------'
-        and bundesland != 'Bundesrepublik Deutschland'
-        and year = '2022';
-    '''
-    df_crimes_bundeslaender = get_dataframe(query)
-    df_crimes_bundeslaender.columns = ['schluessel', 'straftat', 'bundesland', 'anzahl_erfasste_faelle', 'year']
-    st.write(df_crimes_bundeslaender)
+    with col1:
+        # Load needed Dataframe and show table
+        query = '''
+            select bundesland, anzahl_erfasste_faelle, year
+            from public.laender_grund_2022_until_2018
+            where schluessel = '------'
+            and bundesland != 'Bundesrepublik Deutschland'
+            and year = '2022';
+        '''
+        df_crimes_bundeslaender = get_dataframe(query)
+        df_crimes_bundeslaender.columns = ['State', 'Cases', 'Year']
+        st.write(df_crimes_bundeslaender)
 
-    # Make Bar-Chart from Dataframe
-    fig = px.bar(
-        df_crimes_bundeslaender,
-        x = df_crimes_bundeslaender['bundesland'],
-        y = df_crimes_bundeslaender['anzahl_erfasste_faelle'],
-        hover_name = 'bundesland',
-        hover_data = {'bundesland':False},
-        labels = {'bundesland':'State', 'anzahl_erfasste_faelle':'Crimes'},
-        title = 'Crimes per State in 2022'
-    )
-    fig.update_xaxes(tickangle=-90)
-    # fig.show()
-    st.plotly_chart(fig)
+    with col2:
+        # Make Bar-Chart from Dataframe
+        fig = px.bar(
+            df_crimes_bundeslaender,
+            x = df_crimes_bundeslaender['State'],
+            y = df_crimes_bundeslaender['Cases'],
+            hover_name = 'State',
+            hover_data = {'State':False},
+            # labels = {'bundesland':'State', 'anzahl_erfasste_faelle':'Crimes'},
+            title = 'Crimes per State in 2022'
+        )
+        fig.update_xaxes(tickangle=-90)
+        # fig.show()
+        st.plotly_chart(fig)
 
     # Make Map for german states
     # Load Geo-Data for states
@@ -114,13 +131,13 @@ if st.session_state['logged_in']:
     # Create Map
     fig2 = px.choropleth(
         df_crimes_bundeslaender, # Crime data
-        locations = 'bundesland', #column in dataframe
+        locations = 'State', #column in dataframe
         geojson = geo_data, #geodata in geoJSON format
         featureidkey = 'properties.NAME_1', #key that merges to dataframe
-        color = 'anzahl_erfasste_faelle', #in dataframe
-        labels = {'bundesland':'State', 'anzahl_erfasste_faelle':'Crimes'},
-        hover_name = 'bundesland',
-        hover_data = {'bundesland':False},
+        color = 'Cases', #in dataframe
+        # labels = {'bundesland':'State', 'anzahl_erfasste_faelle':'Crimes'},
+        hover_name = 'State',
+        hover_data = {'State':False},
         title = 'Crime in Germany',
     )
     fig2.update_geos(fitbounds='locations', visible=False)
@@ -132,7 +149,7 @@ if st.session_state['logged_in']:
     with st.sidebar:
         st.subheader('Dashboard Controls')
         year = st.slider('🗓 Year', min_value=2018, max_value=2022, value=2022)
-        state = st.selectbox('🇩🇪 State', df_crimes_bundeslaender['bundesland'])
+        state = st.selectbox('🇩🇪 State', df_crimes_bundeslaender['State'])
         gender = st.radio('☯️ Gender', ['All', 'Female', 'Male'])
         st.button('☀️ Reset')
         st.divider()
