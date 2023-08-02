@@ -154,9 +154,10 @@ if st.session_state['logged_in']:
         st.button('☀️ Reset')
         st.divider()
         st.markdown('#### 👋 Interested in us?')
+        st.image('img/linkedin.png', width=20)
         st.markdown('''Johanna Köpke  
-                    Julie Laur  
-                    Alexander Schuppe  ''')
+                    [Julie Laur](https://www.linkedin.com/in/julie-laur-a4167713a/)  
+                    ![](img/linkedin.png) [Alexander Schuppe](https://www.linkedin.com/in/alexander-schuppe/)  ''')
         st.divider()
         st.caption('Impressum')
 
