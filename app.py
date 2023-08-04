@@ -31,6 +31,10 @@ st.markdown("""
         </style>
         """, unsafe_allow_html=True)
 
+# Configure Variables
+if 'year' not in st.session_state:
+    st.session_state['year'] = 2022
+
 
 
 # Protect Dashboard with a simple password mechanism
@@ -90,9 +94,8 @@ if st.session_state['logged_in']:
         return pd.DataFrame(result)
     
 
-    st.subheader('Crime in Germany')
-    st.markdown('#### Distribution and Frequency Development')
-    st.divider()
+    
+
 
     col1, col2 = st.columns([0.35, 0.65])
 
@@ -148,7 +151,7 @@ if st.session_state['logged_in']:
     
     with st.sidebar:
         st.subheader('Dashboard Controls')
-        year = st.slider('🗓 Year', min_value=2018, max_value=2022, value=2022)
+        st.session_state['year'] = st.slider('🗓 Year', min_value=2018, max_value=2022, value=2022)
         state = st.selectbox('🇩🇪 State', df_crimes_bundeslaender['State'])
         gender = st.radio('☯️ Gender', ['All', 'Female', 'Male'])
         st.button('☀️ Reset')
@@ -160,4 +163,9 @@ if st.session_state['logged_in']:
                     ![](img/linkedin.png) [Alexander Schuppe](https://www.linkedin.com/in/alexander-schuppe/)  ''')
         st.divider()
         st.caption('Impressum')
+    
+
+    st.subheader(f"Crime in Germany {st.session_state['year']}")
+    st.markdown('#### Distribution and Frequency Development')
+    st.divider()
 
