@@ -1,5 +1,7 @@
-json
 streamlit
 pandas
+geopandas
+matplotlib
+seaborn
 plotly
 psycopg2-binary
