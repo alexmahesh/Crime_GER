@@ -36,11 +36,11 @@ st.markdown("""
         """, unsafe_allow_html=True)
 
 # Remove Streamlit Footer
-# st.markdown("""<style>.appview-container .main footer {visibility: hidden;}</style>""", unsafe_allow_html=True)
+st.markdown("""<style>.appview-container .main footer {visibility: hidden;}</style>""", unsafe_allow_html=True)
 # maybe: .reportview-container
 
 # Remove the decoration on top of Streamlit page
-# st.markdown("""<style>.css-1dp5vir {visibility: hidden;}</style>""", unsafe_allow_html=True)
+st.markdown("""<style>.css-1dp5vir {visibility: hidden;}</style>""", unsafe_allow_html=True)
 
 # ----------------------------------------------------
 # Log-in
