@@ -4,8 +4,8 @@
 
 ### To Alexandra and Sergio  
 ---
-Please review the [app.py](https://github.com/alexmahesh/Crime_GER/blob/main/app.py) file.  
-You can find the running Dashboard here: [Juvenile Crime in Germany](https://crime-germany.streamlit.app/) (password as communicated).  
+Please review the <a href='https://github.com/alexmahesh/Crime_GER/blob/main/app.py' target='_blank'>app.py</a> file.  
+You can find the running Dashboard here: <a href='https://crime-germany.streamlit.app/' target='_blank'>Juvenile Crime in Germany</a> (password as communicated).  
 <br>
 ### Next ToDo  
 ---
@@ -16,28 +16,28 @@ You can find the running Dashboard here: [Juvenile Crime in Germany](https://cri
 ---
 This is the Dashboard for our capstone project in the Data Analyst Bootcamp of neuefische (may to august 2023).  
 We are:  
-- [Johanna Köpke]()  
-- [Julie Laur](https://www.linkedin.com/in/julie-laur-a4167713a/)  
-- [Alexander Schuppe](https://www.linkedin.com/in/alexander-schuppe/)  
+- <a href='#'>Johanna Köpke</a>  
+- <a href='https://www.linkedin.com/in/julie-laur-a4167713a/' target='_blank'>Julie Laur</a>  
+- <a href='https://www.linkedin.com/in/alexander-schuppe/' target='_blank'>Alexander Schuppe</a>  
 
 The Dashboard shows different statistics and gives insights about juvenile crime in Germany.  
 <br>
 ### The Data  
 ---
 The Data used for this Dashboard comes from:  
-- [German Federal Criminal Police Office: PKS Bundeskriminalamt, 2018 - 2022, Version 2.0](https://www.bka.de/DE/AktuelleInformationen/StatistikenLagebilder/PolizeilicheKriminalstatistik/pks_node.html)
-- [German Federal Statistical Office: Statistisches Bundesamt (Destatis), 2023](https://www.destatis.de/DE/Home/_inhalt.html)  
+- <a href='https://www.bka.de/DE/AktuelleInformationen/StatistikenLagebilder/PolizeilicheKriminalstatistik/pks_node.html' target='_blank'>German Federal Criminal Police Office: PKS Bundeskriminalamt, 2018 - 2022, Version 2.0</a>  
+- <a href='https://www.destatis.de/DE/Home/_inhalt.html' target='_blank'>German Federal Statistical Office: Statistisches Bundesamt (Destatis), 2023</a>  
   <br>
 ### Technical Overview  
 ---
 __Dashboard__  
-The Dashboard is coded completely in Python with [Streamlit](https://streamlit.io/). It is hosted with a free account  on the Streamlit-Server.  
+The Dashboard is coded completely in Python with <a href='https://streamlit.io/' target='_blank'>Streamlit</a>. It is hosted with a free account  on the Streamlit-Server.  
 
 __Database__  
-It loads the needed data from several tables stored in a PostgreSQL-Database hosted on [Microsoft Azure](https://azure.microsoft.com/de-de/).  
+It loads the needed data from several tables stored in a PostgreSQL-Database hosted on <a href='https://azure.microsoft.com/de-de/' target='_blank'>Microsoft Azure</a>.  
 
 __Charts__  
-The Charts are created with [Plotly](https://plotly.com/).  
+The Charts are created with <a href='https://plotly.com/' target='_blank'>Plotly</a>.  
 <br>
 ### Usage  
 ---
