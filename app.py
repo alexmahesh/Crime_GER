@@ -7,6 +7,16 @@ import plotly.express as px
 import psycopg2
 
 
+# -----------------------------------------------------
+# Juvenile Crime in Germany.
+# Dashboard for the capstone project of Data Analyst Bootcamp (may to august 2023) of neuefische.
+# 
+# Johanna Köpke.
+# Julie Laur.
+# Alexander Schuppe.
+# -----------------------------------------------------
+
+
 # ---------------------------------
 # Layout/Styling
 # (Some configurations for Streamlit)
