@@ -60,18 +60,18 @@ def check_password():
         st.session_state['logged_in'] = False
     del st.session_state['password'] # delete entered password
 
-# # Show the input field for the password
-# if 'logged_in' not in st.session_state:
-#     # The very first run of the app, no password entered yet
-#     st.session_state['logged_in'] = False
-#     st.text_input('Password', type='password', on_change=check_password, key='password')
-# elif not st.session_state['logged_in']:
-#     # User has input wrong password
-#     st.text_input('Password', type='password', on_change=check_password, key='password')
-#     st.error('🧐 Wrong Password')
+# Show the input field for the password
+if 'logged_in' not in st.session_state:
+    # The very first run of the app, no password entered yet
+    st.session_state['logged_in'] = False
+    st.text_input('Password', type='password', on_change=check_password, key='password')
+elif not st.session_state['logged_in']:
+    # User has input wrong password
+    st.text_input('Password', type='password', on_change=check_password, key='password')
+    st.error('🧐 Wrong Password')
 
 # Remove after end of development and uncomment upper block
-st.session_state['logged_in'] = True
+# st.session_state['logged_in'] = True
 
 
 # ----------------------------
