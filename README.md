@@ -6,12 +6,36 @@
 ---
 Please review the <a href='https://github.com/alexmahesh/Crime_GER/blob/main/app.py' target='_blank'>app.py</a> file.  
 You can find the running Dashboard here: <a href='https://crime-germany.streamlit.app/' target='_blank'>Juvenile Crime in Germany</a> (password as communicated).  
-<br>
+
+__To your help:__  
+When using and trying out the dashboard, the user instructions further down might help you.  
+
+The _app.py_ file is the starting point of a Streamlit Dashboard. It runs - as a usual python file - top down.  
+
+Every time the user interacts with some of the controls (e.g. sliders, buttons, etc.) on the sidebar to the left of the dashboard, the complete python script _app.py_ again runs top down. This makes it necessary to pay attention to the order in which you place different parts of the script.  
+
+Certain elements that are big in size and heavy to load (e.g. large files or data from a database) can be cached so that they are only loaded once (if nothing in the data or the request itself changes). This is done with the _@st.cache_data_ decorator at the top of some functions.  
+
+This also means that any information stored in variables is lost as soon as the script runs again after an user interaction. Information needed to survive can be stored inside of session variables (similar to PHP programming).  They are like global variables in python, 'survive' the rerun of the script and make it possible to transfer information betwenn different html pages.  
+
+__Control Flow of the script:__  
+1. As usual at first the needed python libraries are imported.  
+1. Then some Streamlit internal configurations are made.  
+1. A password protection for the Dashboard is implemented, so not everybody can use the Dashboard.  
+1. Secret information (like password or database credentials) are stored and provided with a Streamlit intern mechanism via a so called _secrets.toml_ file (similar to the _.env_ file). This file is added to _.gitignore_ and not uploaded on GitHub.  
+1.Then all the functions that are needed follow. Every Chart on the dashboard has it's own function to deliver the data needed to draw it, so that it is easier to react to user interactions.  
+1. The first function _get_dataframe(query)_ connects to the postgres database on Azure, can run queries to the database and return pandas dataframes.  
+1. All needed Dataframes are loaded at the beginning into the script. They are cached so that they will only be loaded once. One _.json_ file is loaded, containing the geospatial information about the federal states for the map charts.  
+1. The needed session variables are created and initialized. They provide the starting state for all the controls in the sidebar (e.g. setting the _year_ to 2022).  
+1. Some dictionaries are defined for translating complicated names and keys like column names in SQL databases to userfriendly names in the controls in the sidebar.  
+1. The elements of the sidebar are created.  
+1. Finally the elements of the dashboard are printed to the html page. The html file is divided and structured with the help of the two Streamlit elements _Tabs_ and _Columns_.  
+
 ### Next ToDo  
 ---
 - implement the possibility to choose between absolute and relative numbers  
 - implement Federal States Tab 
-- <br>
+<br>
 ### Overview  
 ---
 This is the Dashboard for our capstone project in the Data Analyst Bootcamp of neuefische (may to august 2023).  
@@ -31,26 +55,27 @@ The Data used for this Dashboard comes from:
 ### Technical Overview  
 ---
 __Dashboard__  
-The Dashboard is coded completely in Python with <a href='https://streamlit.io/' target='_blank'>Streamlit</a>. It is hosted with a free account  on the Streamlit-Server.  
+The Dashboard is coded completely in Python with the <a href='https://streamlit.io/' target='_blank'>Streamlit</a> library. It is hosted with a free account  on the Streamlit-Server.  
 
 __Database__  
 It loads the needed data from several tables stored in a PostgreSQL-Database hosted on <a href='https://azure.microsoft.com/de-de/' target='_blank'>Microsoft Azure</a>.  
 
 __Charts__  
-The Charts are created with <a href='https://plotly.com/' target='_blank'>Plotly</a>.  
+The Charts are created with the Python <a href='https://plotly.com/' target='_blank'>Plotly</a> library.  
 <br>
-### Usage  
+### User Instructions  
 ---
 ### __Sidebar__  
-<img src='img/side_controls.png' height='300' />  
+<img src='img/side_controls.png' height='300' />  <br>
 The Dashboard has several controls that are located in the sidebar on the left. The sidebar can be opened or hidden.  
 
 ### __Tabs__  
-<img src='img/tabs.png' height='70'/>  
+<img src='img/tabs.png' height='70'/>  <br>
 The Dashboard currently has 3 Tabs to show different information:  
-- Germany : Showing overview information about juvenile crime rates in whole Germany.  
-- States : Showing more specialized information about the juvenile crime rates in the federal states of Germany.  
-- Cities : Showing specialized information about juvenile crime rates in the top 7 cities (concerning number of residents) of Germany.  
+
+- Germany-Tab : Showing an overview information about juvenile crime rates in whole Germany.  
+- States-Tab : Showing more specialized information about the juvenile crime rates in the federal states of Germany.  
+- Cities-Tab : Showing specialized information about juvenile crime rates in the top 7 cities (concerning number of residents) of Germany.  
 
 ### __Germany-Tab__  
 ---
@@ -59,6 +84,8 @@ On this tab you can change:
 - Crime Type (choosing between selected crime types that are relevant for Juveniles),  
 - Age Group (choosing between defined age groups that are relevant for german laws),  
 - Gender (differentiating between female and male).  
+
+Interacting with the _Federal State_ dropdown will have no effect, because this is reserved for the States-Tab.  
 <br>
 
 __Map on Germany-Tab__  
