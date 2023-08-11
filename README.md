@@ -35,7 +35,6 @@ __Control Flow of the script:__
 ---
 - implement the possibility to choose between absolute and relative numbers  
 - implement Federal States Tab 
-<br>
 
 ### Overview  
 ---
