@@ -1,3 +1,13 @@
+# -----------------------------------------------------
+# Juvenile Crime in Germany.
+# Dashboard for the capstone project of Data Analyst Bootcamp (may to august 2023) of neuefische.
+# 
+# Created by: 
+# Johanna Köpke.
+# Julie Laur.
+# Alexander Schuppe.
+# -----------------------------------------------------
+
 
 # Import the needed libraries
 import json
@@ -5,16 +15,6 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import psycopg2
-
-
-# -----------------------------------------------------
-# Juvenile Crime in Germany.
-# Dashboard for the capstone project of Data Analyst Bootcamp (may to august 2023) of neuefische.
-# 
-# Johanna Köpke.
-# Julie Laur.
-# Alexander Schuppe.
-# -----------------------------------------------------
 
 
 # ---------------------------------
@@ -51,6 +51,7 @@ st.markdown("""<style>.appview-container .main footer {visibility: hidden;}</sty
 
 # Remove the decoration on top of Streamlit page
 st.markdown("""<style>.css-1dp5vir {visibility: hidden;}</style>""", unsafe_allow_html=True)
+
 
 # ----------------------------------------------------
 # Log-in
