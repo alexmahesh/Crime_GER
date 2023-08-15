@@ -683,58 +683,6 @@ if st.session_state['logged_in']:
         st.plotly_chart(fig3, use_container_width=True)
         # Show the table
         # st.dataframe(df3)
-
-
-    st.markdown(f"<h5 style='margin-bottom:0rem; padding-bottom:0rem;'>Overview of Years</h5>", unsafe_allow_html=True)
-
-    col3, col4 = st.columns(2)
-
-    with col3:
-        # ----------------------------
-        # Overview Years Absolute (Line Chart)
-        # ----------------------------
-        df4 = get_df_overview_linechart_absolute(crime_types[st.session_state['crime_type']], age_groups[st.session_state['age_group']], genders[st.session_state['gender']])
-        fig4 = px.line(
-            x=df4['year'], 
-            y=df4[age_groups[st.session_state['age_group']]], 
-            markers=True,
-        )
-        fig4.update_xaxes(type='category') #set to categorical datatype so that on x-axis no in between values are calculated by plotly
-        fig4.update_layout(margin = dict(l=0, t=25, r=0, b=0), height=250)
-        fig4.update_layout(
-            # title = straftat + ' - ' + age_group.replace('_', ' ').title(),
-            xaxis_title = 'Year',
-            yaxis_title = 'Number of Crimes'
-        )
-        fig4.update_traces(line_color="#32CD32")
-        # Show on Dashboard
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Absolute</h6>", unsafe_allow_html=True)
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem; color:red';>Not yet ready implemented</h6>", unsafe_allow_html=True)
-        st.plotly_chart(fig4, use_container_width=True)
-    
-
-    with col4:
-        # ----------------------------
-        # Overview Years Relative (Line Chart)
-        # ----------------------------
-        df5 = get_df_overview_linechart_absolute(crime_types[st.session_state['crime_type']], age_groups[st.session_state['age_group']], genders[st.session_state['gender']])
-        fig5 = px.line(
-            x=df5['year'], 
-            y=df5[age_groups[st.session_state['age_group']]], 
-            markers=True,
-        )
-        fig5.update_xaxes(type='category') #set to categorical datatype so that on x-axis no in between values are calculated by plotly
-        fig5.update_layout(margin = dict(l=0, t=25, r=0, b=0), height=250)
-        fig5.update_layout(
-            # title = straftat + ' - ' + age_group.replace('_', ' ').title(),
-            xaxis_title = 'Year',
-            yaxis_title = 'Number of Crimes'
-        )
-        fig5.update_traces(line_color="#32CD32")
-        # Show on Dashboard
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Relative (per 100.000 residents)</h6>", unsafe_allow_html=True)
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem; color:red';>Not yet ready implemented</h6>", unsafe_allow_html=True)
-        st.plotly_chart(fig5, use_container_width=True)
     
 
     # ----------------------------
@@ -839,6 +787,61 @@ if st.session_state['logged_in']:
         
     # Show the table
     # st.dataframe(df6)
+
+
+    st.markdown(f"<h5 style='margin-bottom:0rem; padding-bottom:0rem;'>Overview of Years</h5>", unsafe_allow_html=True)
+
+    col3, col4 = st.columns(2)
+
+    with col3:
+        # ----------------------------
+        # Overview Years Absolute (Line Chart)
+        # ----------------------------
+        df4 = get_df_overview_linechart_absolute(crime_types[st.session_state['crime_type']], age_groups[st.session_state['age_group']], genders[st.session_state['gender']])
+        fig4 = px.line(
+            x=df4['year'], 
+            y=df4[age_groups[st.session_state['age_group']]], 
+            markers=True,
+        )
+        fig4.update_xaxes(type='category') #set to categorical datatype so that on x-axis no in between values are calculated by plotly
+        fig4.update_layout(margin = dict(l=0, t=25, r=0, b=0), height=250)
+        fig4.update_layout(
+            # title = straftat + ' - ' + age_group.replace('_', ' ').title(),
+            xaxis_title = 'Year',
+            yaxis_title = 'Number of Crimes'
+        )
+        fig4.update_traces(line_color="#32CD32")
+        # Show on Dashboard
+        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Absolute</h6>", unsafe_allow_html=True)
+        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem; color:red';>Not yet ready implemented</h6>", unsafe_allow_html=True)
+        st.plotly_chart(fig4, use_container_width=True)
+    
+
+    with col4:
+        # ----------------------------
+        # Overview Years Relative (Line Chart)
+        # ----------------------------
+        df5 = get_df_overview_linechart_absolute(crime_types[st.session_state['crime_type']], age_groups[st.session_state['age_group']], genders[st.session_state['gender']])
+        fig5 = px.line(
+            x=df5['year'], 
+            y=df5[age_groups[st.session_state['age_group']]], 
+            markers=True,
+        )
+        fig5.update_xaxes(type='category') #set to categorical datatype so that on x-axis no in between values are calculated by plotly
+        fig5.update_layout(margin = dict(l=0, t=25, r=0, b=0), height=250)
+        fig5.update_layout(
+            # title = straftat + ' - ' + age_group.replace('_', ' ').title(),
+            xaxis_title = 'Year',
+            yaxis_title = 'Number of Crimes'
+        )
+        fig5.update_traces(line_color="#32CD32")
+        # Show on Dashboard
+        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Relative (per 100.000 residents)</h6>", unsafe_allow_html=True)
+        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem; color:red';>Not yet ready implemented</h6>", unsafe_allow_html=True)
+        st.plotly_chart(fig5, use_container_width=True)
+    
+
+    
     
     
 
