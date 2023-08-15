@@ -295,53 +295,25 @@ if st.session_state['logged_in']:
         return df_overview_pie
     
 
-    def get_df_overview_linechart_absolute(crime_type, age_group, gender):
+    def get_df_overview_linechart(state, crime_type, age_group, gender):
         '''
-        Create a table from global table 'df_bund_abs' for making a linechart out of it.
+        Create a table from global table 'df_bund_laender_abs_rel' for making a linechart out of it.
+        @state (str): The federal state to show.
         @crime_type (list of string): The 'schluessel' of different crime types.
         @age_group (string): The name of the column in the database for the filtered age group.
         @gender (string): The gender to filter for.
         @return (pandas.Dataframe): The dataframe to make a linechart from.
         '''
-        df_overview_linechart = df_bund_abs[
-            (df_bund_abs['schluessel'].isin(crime_type)) &
-            (df_bund_abs['sexus'] == gender)
-        ][[
-            'schluessel', # =crime_type
-            'year',
-            'sexus',
-            'straftat', # =crime_type
-        ]]
-        # Add the crime_type (=age_group)
-        df_overview_linechart[age_group] = df_bund_abs[age_group]
+        if state == 'Germany':
+            state = 'Bundesrepublik Deutschland' 
+        df_overview_linechart = df_bund_laender_abs_rel[
+            (df_bund_laender_abs_rel['bundesland'] == state) &
+            (df_bund_laender_abs_rel['schluessel'].isin(crime_type)) &
+            (df_bund_laender_abs_rel['age_group'] == age_group) &
+            (df_bund_laender_abs_rel['sexus'] == gender)
+        ]
         # Calculate the sum for the crime_type, if there are several 'schluessel'
-        df_overview_linechart = df_overview_linechart.groupby('year', as_index=False).sum()
-
-        return df_overview_linechart
-    
-
-    def get_df_overview_linechart_relative(crime_type, age_group, gender):
-        '''
-        Create a table from global table 'df_bund_rel' for making a linechart out of it.
-        @crime_type (list of string): The 'schluessel' of different crime types.
-        @age_group (string): The name of the column in the database for the filtered age group.
-        @gender (string): The gender to filter for.
-        @return (pandas.Dataframe): The dataframe to make a linechart from.
-        '''
-        df_overview_linechart = df_bund_rel[
-            (df_bund_rel['schluessel'].isin(crime_type)) &
-            (df_bund_rel['sexus'] == gender)
-        ][[
-            'schluessel', # =crime_type
-            'year',
-            'sexus',
-            'straftat', # =crime_type
-        ]]
-        # Add the crime_type (=age_group)
-        df_overview_linechart[age_group] = df_bund_rel[age_group]
-        # Calculate the sum for the crime_type, if there are several 'schluessel'
-        df_overview_linechart = df_overview_linechart.groupby('year', as_index=False).sum()
-
+        #df_overview_linechart = df_overview_linechart.groupby('year', as_index=False).sum()
         return df_overview_linechart
     
 
@@ -383,6 +355,8 @@ if st.session_state['logged_in']:
     df_distribution_crime = get_dataframe("SELECT * FROM public.df_distribution_crime_2022_until_2018;")
     df_growth_rate = get_dataframe("SELECT * FROM public.df_growth_rate_2022_until_2018;")
     df_laender_abs_rel = get_dataframe("SELECT * FROM public.df_laender_abs_rel_2022_until_2018;")
+    df_bund_laender_abs_rel = get_dataframe("SELECT * FROM public.df_bund_laender_abs_rel_2022_until_2018;")
+    
 
     # Load Geo-Data needed for maps (containing federal states of Germany)
     @st.cache_data
@@ -546,7 +520,7 @@ if st.session_state['logged_in']:
             hover_data = {'schluessel': False,
                           'straftat': True,
                           'bundesland': False, 
-                          'year': True, 
+                          'year': False, 
                           'age_group': False,
                           'sexus': False,
                           'offenders': True,
@@ -554,7 +528,7 @@ if st.session_state['logged_in']:
             }, 
             labels = {
                     'straftat': 'Crime',
-                    'year': 'Year',
+                    # 'year': 'Year',
                     'offenders': 'Offenders absolute',
                     'offenders_rel': 'Offenders per 100,000 residents',
             },
@@ -699,6 +673,8 @@ if st.session_state['logged_in']:
         # st.dataframe(df3)
     
 
+    st.markdown(f"<h4 style='margin-bottom:1.5rem; padding-bottom:0rem;'>Overview of Years</h4>", unsafe_allow_html=True)
+
     # ----------------------------
     # Growth Rate (Just Numbers)
     # ----------------------------
@@ -783,7 +759,7 @@ if st.session_state['logged_in']:
         st.markdown(f"""
                     <div style='border:1px solid; border-color: #e3e7ee; padding: 15px; border-radius: 10px;'>
                     <h5 style='margin-bottom:0.5rem; padding-bottom:0rem;'>{arrow_up.format(size=32, color=blue)}&nbsp;&nbsp;Growth Rates</h5>
-                    <h6 style='margin-top:0rem; margin-bottom:1rem; padding-bottom:0rem;'>Relative</h6>
+                    <h6 style='margin-top:0rem; margin-bottom:0.5rem; padding-bottom:0rem;'>Relative</h6>
                     <span style='margin-bottom: 0.7rem; display:block;'>
                     <b>State:</b> {st.session_state['federal_state']},
                     <b>Year:</b> {st.session_state['year']},
@@ -803,60 +779,70 @@ if st.session_state['logged_in']:
     # st.dataframe(df6)
 
 
-    st.markdown(f"<h5 style='margin-bottom:0rem; padding-bottom:0rem;'>Overview of Years</h5>", unsafe_allow_html=True)
-
     col3, col4 = st.columns(2)
 
     with col3:
         # ----------------------------
         # Overview Years Absolute (Line Chart)
         # ----------------------------
-        df4 = get_df_overview_linechart_absolute(crime_types[st.session_state['crime_type']], age_groups[st.session_state['age_group']], genders[st.session_state['gender']])
+        df4 = get_df_overview_linechart(st.session_state['federal_state'], 
+                                        crime_types[st.session_state['crime_type']], 
+                                        age_groups[st.session_state['age_group']], 
+                                        genders[st.session_state['gender']]
+        )
         fig4 = px.line(
             x=df4['year'], 
-            y=df4[age_groups[st.session_state['age_group']]], 
+            y=df4['offenders'], 
             markers=True,
         )
         fig4.update_xaxes(type='category') #set to categorical datatype so that on x-axis no in between values are calculated by plotly
         fig4.update_layout(margin = dict(l=0, t=25, r=0, b=0), height=250)
         fig4.update_layout(
-            # title = straftat + ' - ' + age_group.replace('_', ' ').title(),
             xaxis_title = 'Year',
             yaxis_title = 'Number of Crimes'
         )
-        fig4.update_traces(line_color="#32CD32")
-        # Show on Dashboard
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Absolute</h6>", unsafe_allow_html=True)
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem; color:red';>Not yet ready implemented</h6>", unsafe_allow_html=True)
+        fig4.update_traces(line_color="#1a60bc")
+        # Show on Dashboard        
         st.plotly_chart(fig4, use_container_width=True)
+        # Show the table
+        # st.dataframe(df4)
     
 
     with col4:
         # ----------------------------
         # Overview Years Relative (Line Chart)
         # ----------------------------
-        df5 = get_df_overview_linechart_absolute(crime_types[st.session_state['crime_type']], age_groups[st.session_state['age_group']], genders[st.session_state['gender']])
+        df5 = get_df_overview_linechart(st.session_state['federal_state'], 
+                                        crime_types[st.session_state['crime_type']], 
+                                        age_groups[st.session_state['age_group']], 
+                                        genders[st.session_state['gender']]
+        )
         fig5 = px.line(
             x=df5['year'], 
-            y=df5[age_groups[st.session_state['age_group']]], 
+            y=df5['offenders_rel'], 
             markers=True,
         )
         fig5.update_xaxes(type='category') #set to categorical datatype so that on x-axis no in between values are calculated by plotly
         fig5.update_layout(margin = dict(l=0, t=25, r=0, b=0), height=250)
         fig5.update_layout(
-            # title = straftat + ' - ' + age_group.replace('_', ' ').title(),
             xaxis_title = 'Year',
             yaxis_title = 'Number of Crimes'
         )
-        fig5.update_traces(line_color="#32CD32")
-        # Show on Dashboard
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Relative (per 100.000 residents)</h6>", unsafe_allow_html=True)
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem; color:red';>Not yet ready implemented</h6>", unsafe_allow_html=True)
+        fig5.update_traces(line_color="#1a60bc")
+        # Show on Dashboard        
         st.plotly_chart(fig5, use_container_width=True)
-    
+        # Show the table
+        # st.dataframe(df5)
 
-    
-    
-    
+# Give it some space at the bottom for scrolling down a little bit further    
+st.write('')
+st.write('')
+st.write('')
 
-    
+# ---
+# And this is the end.
+# ---
+# At the end everything is good.
+# And if it is not good,
+# it is not the end.
+# ---
