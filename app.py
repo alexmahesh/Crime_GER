@@ -129,20 +129,25 @@ if st.session_state['logged_in']:
         st.session_state['age_group'] = 'All'
         st.session_state['crime_type'] = 'All'
         st.session_state['gender'] = 'All'
+        st.session_state['abs_rel'] = 'Relative'
     
 
-    def get_df_overview_fed_states_for_year(year, age_group, gender):
+    def get_df_map(crime, year, age_group, gender):
         '''
-        Filters the Dataframe for the chosen parameters.
-        @year (int): The year the dataframe shall be filtered.
-        @age_group (str): The age group from the SQL table.
-        @gender (str): The gender from the SQL table.
-        @return (pandas.Dataframe): The dataframe to be plotted in the dashboard (map).
+        Get the data for plotting the Map.
+        @crime (list of str): The 'schluessel' = crime_type from the DB to be filtered.
+        @year (int): The year to be filtered
+        @age_group (str): One of the age_group's from the DB.
+        @gender (str): Male (M), Female (F) or both (X).
+        @return (pandas.Dataframe): The filtered Dataframe with the data needed to plot the map.
         '''
-        df_to_plot = df_overview_fed_states[(df_overview_fed_states['year'] == year) & 
-                                            (df_overview_fed_states['sexus'] == gender) &
-                                            (df_overview_fed_states['age_group'] == age_group)]
-        return df_to_plot
+        df_map = df_laender_abs_rel[
+            (df_laender_abs_rel['schluessel'].isin(crime)) &
+            (df_laender_abs_rel['year'] == year) &
+            (df_laender_abs_rel['age_group'] == age_group) &
+            (df_laender_abs_rel['sexus'] == gender)
+        ]
+        return df_map
     
 
     def get_top_crimes_germany(year, age_group, gender):
@@ -377,6 +382,7 @@ if st.session_state['logged_in']:
     df_overview_state = get_dataframe("SELECT * FROM public.df_overview_state_2022_until_2018;")
     df_distribution_crime = get_dataframe("SELECT * FROM public.df_distribution_crime_2022_until_2018;")
     df_growth_rate = get_dataframe("SELECT * FROM public.df_growth_rate_2022_until_2018;")
+    df_laender_abs_rel = get_dataframe("SELECT * FROM public.df_laender_abs_rel_2022_until_2018;")
 
     # Load Geo-Data needed for maps (containing federal states of Germany)
     @st.cache_data
@@ -401,6 +407,8 @@ if st.session_state['logged_in']:
         st.session_state['crime_type'] = 'All'
     if 'gender' not in st.session_state:
         st.session_state['gender'] = 'All'
+    if 'abs_rel' not in st.session_state:
+        st.session_state['abs_rel'] = 'Relative'
     
 
     #------------------------
@@ -519,7 +527,14 @@ if st.session_state['logged_in']:
         # Map on the left side
         # ----------------------------
         # Get the data
-        df1 = get_df_overview_fed_states_for_year(st.session_state['year'], age_groups[st.session_state['age_group']], genders[st.session_state['gender']])
+        df1 = get_df_map(crime_types[st.session_state['crime_type']], st.session_state['year'], age_groups[st.session_state['age_group']], genders[st.session_state['gender']])
+        
+        # Choose relative/absolute values
+        if st.session_state['abs_rel'] == 'Relative':
+            color_column = 'offenders_rel'
+        else:
+            color_column = 'offenders'
+       
         # Create the map
         fig1 = px.choropleth_mapbox(
             df1,
@@ -527,28 +542,21 @@ if st.session_state['logged_in']:
             geojson = geo_data, #geodata in geoJSON format
             featureidkey = 'properties.NAME_1', #key that merges to dataframe
             hover_name = 'bundesland',
-            color = 'offenders_rel',
-            hover_data = {'bundesland': False, 
-                            'year': False, 
-                            'offenders': True,
-                            'offenders_rel': True, 
-                            'growth_rate_abs': True, 
-                            'growth_rate_rel': True,
-                            'crimes_on_rank_1': True, 
-                            'percentage_of_rank_1_on_crime_total': True,
-                            'crimes_on_rank_2': True, 
-                            'percentage_of_rank_2_on_crime_total': True,
-                            'crimes_on_rank_3': True, 
-                            'percentage_of_rank_3_on_crime_total': True
+            color = color_column,
+            hover_data = {'schluessel': False,
+                          'straftat': True,
+                          'bundesland': False, 
+                          'year': True, 
+                          'age_group': False,
+                          'sexus': False,
+                          'offenders': True,
+                          'offenders_rel': True, 
             }, 
             labels = {
-                        'offenders_rel': 'Offenders per 100,000 residents',
-                        'crimes_on_rank_1': 'Crimes rank 1', 
-                        'percentage_of_rank_1_on_crime_total': 'Rank 1, % of total',
-                        'crimes_on_rank_2': 'Crimes rank 2', 
-                        'percentage_of_rank_2_on_crime_total': 'Rank 2, % of total',
-                        'crimes_on_rank_3': 'Crimes rank 3', 
-                        'percentage_of_rank_3_on_crime_total': 'Rank 3, % of total'
+                    'straftat': 'Crime',
+                    'year': 'Year',
+                    'offenders': 'Offenders absolute',
+                    'offenders_rel': 'Offenders per 100,000 residents',
             },
             zoom=4.8,
             height=550,
@@ -563,8 +571,9 @@ if st.session_state['logged_in']:
         fig1.update_mapboxes(center=dict(lat=51.4, lon=10.5)) #Flinsberg, middle of Germany
         fig1.update_coloraxes(showscale=True)
         # Show in Dashboard
-        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Offenders per federal state (per 100.000 residents)</h6>", unsafe_allow_html=True)
+        st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Offenders {st.session_state['abs_rel']}</h6>", unsafe_allow_html=True)
         st.markdown(f"""<div style='margin-bottom:0.5rem; padding-bottom:0rem; font-size: 0.9em;'>
+                            <b>Crime:</b> {st.session_state['crime_type']}<br>
                             <b>Age:</b> {age_groups[st.session_state['age_group']]} &nbsp;&nbsp;&nbsp;
                             <b>Gender:</b> {genders[st.session_state['gender']]} &nbsp;&nbsp;&nbsp;
                             <b>Year:</b> {st.session_state['year']}
@@ -572,6 +581,11 @@ if st.session_state['logged_in']:
                         unsafe_allow_html=True
                     )
         st.plotly_chart(fig1, use_container_width=True)
+        # Show the dataframe
+        # st.dataframe(df1, use_container_width = True)
+
+        # Radio Buttons to choose between absolute/relative values
+        st.radio('Choose what values to show in the map', options=['Relative', 'Absolute'], key='abs_rel', horizontal=True)
 
 
     with col2:
@@ -748,20 +762,20 @@ if st.session_state['logged_in']:
         
         st.markdown(f"""
                     <div style='border:1px solid; border-color: #e3e7ee; padding: 15px; border-radius: 10px;'>
-                    <h5 style='margin-bottom:0.5rem; padding-bottom:0rem;'>{arrow_up.format(size=32, color=blue)}&nbsp;&nbsp;Growth Rates</h5>
-                    <h6 style='margin-top:0rem; margin-bottom:0.5rem; padding-bottom:0rem;'>Absolute</h6>
-                    <span style='margin-bottom: 0.7rem; display:block;'>
-                    <b>State:</b> {st.session_state['federal_state']},
-                    <b>Year:</b> {st.session_state['year']},
-                    <b>Crime:</b> {crime_types[st.session_state['crime_type']]}<br>
-                    <b>Age:</b> {age_groups[st.session_state['age_group']]},
-                    <b>Gender:</b> {genders[st.session_state['gender']]}<br>
-                    </span>
-                    <span class=box><span style='font-size:0.8rem;'>2018</span><br><span style='font-size:1.1rem;'>{abso[2018][0]}</span><br>{abso[2018][1]}</span>
-                    <span class=box><span style='font-size:0.8rem;'>2019</span><br><span style='font-size:1.1rem;'>{abso[2019][0]}</span><br>{abso[2019][1]}</span>
-                    <span class=box><span style='font-size:0.8rem;'>2020</span><br><span style='font-size:1.1rem;'>{abso[2020][0]}</span><br>{abso[2020][1]}</span>
-                    <span class=box><span style='font-size:0.8rem;'>2021</span><br><span style='font-size:1.1rem;'>{abso[2021][0]}</span><br>{abso[2021][1]}</span>
-                    <span class=box><span style='font-size:0.8rem;'>2022</span><br><span style='font-size:1.1rem;'>{abso[2022][0]}</span><br>{abso[2022][1]}</span>
+                        <h5 style='margin-bottom:0.5rem; padding-bottom:0rem;'>{arrow_up.format(size=32, color=blue)}&nbsp;&nbsp;Growth Rates</h5>
+                        <h6 style='margin-top:0rem; margin-bottom:0.5rem; padding-bottom:0rem;'>Absolute</h6>
+                        <span style='margin-bottom: 0.7rem; display:block;'>
+                        <b>State:</b> {st.session_state['federal_state']},
+                        <b>Year:</b> {st.session_state['year']},
+                        <b>Crime:</b> {st.session_state['crime_type']}<br>
+                        <b>Age:</b> {age_groups[st.session_state['age_group']]},
+                        <b>Gender:</b> {genders[st.session_state['gender']]}<br>
+                        </span>
+                        <span class=box><span style='font-size:0.8rem;'>2018</span><br><span style='font-size:1.1rem;'>{abso[2018][0]}</span><br>{abso[2018][1]}</span>
+                        <span class=box><span style='font-size:0.8rem;'>2019</span><br><span style='font-size:1.1rem;'>{abso[2019][0]}</span><br>{abso[2019][1]}</span>
+                        <span class=box><span style='font-size:0.8rem;'>2020</span><br><span style='font-size:1.1rem;'>{abso[2020][0]}</span><br>{abso[2020][1]}</span>
+                        <span class=box><span style='font-size:0.8rem;'>2021</span><br><span style='font-size:1.1rem;'>{abso[2021][0]}</span><br>{abso[2021][1]}</span>
+                        <span class=box><span style='font-size:0.8rem;'>2022</span><br><span style='font-size:1.1rem;'>{abso[2022][0]}</span><br>{abso[2022][1]}</span>
                     </div>
         """, unsafe_allow_html=True)
 
@@ -773,7 +787,7 @@ if st.session_state['logged_in']:
                     <span style='margin-bottom: 0.7rem; display:block;'>
                     <b>State:</b> {st.session_state['federal_state']},
                     <b>Year:</b> {st.session_state['year']},
-                    <b>Crime:</b> {crime_types[st.session_state['crime_type']]}<br>
+                    <b>Crime:</b> {st.session_state['crime_type']}<br>
                     <b>Age:</b> {age_groups[st.session_state['age_group']]},
                     <b>Gender:</b> {genders[st.session_state['gender']]}<br>
                     </span>
