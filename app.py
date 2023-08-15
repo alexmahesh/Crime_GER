@@ -397,16 +397,17 @@ if st.session_state['logged_in']:
     # Keys of selected crimes (these keys are used in the data of BKA)
     crime_types = {'All':['------'],
                 #    'Other': ['other'],
-                   'Homicide': ['010000, 020010'], #Tötungen
+                   'Homicide': ['010000, 020010'], #Mord und Totschlag
                    'Assault': ['220000'], #Körperverletzung
-                   'Sexual Offence': ['100000'], #Sexuelle Straftaten
-                   'Deprivation of Liberty': ['232100'], #Freiheitsberaubung
+                   'Sexual offences': ['100000'], #Sexuelle Straftaten
+                   'Deprivation of liberty': ['232100'], #Freiheitsberaubung
                    'Coercion': ['232200'], #Nötigung
-                   'Burglary': ['435*00'], #Wohnungseinbruchdiebstahl
+                   'Residential burglary': ['435*00'], #Wohnungseinbruchdiebstahl
                    'Shoplifting': ['*26*00'], #Ladendiebstahl
-                   'Robbery': ['21000'], #Raub
-                   'Drug/Narcotics': ['730000', '891100'], #Drogen/Betäubungsmittel
-                   'Damage to Property': ['674000'], #Sachbeschädigung
+                   'Robbery': ['210000'], #Raub
+                   'Drug offences (w/o procurement)': ['730000'], #Rauschgiftdelikte (ohne Beschaffungskriminalität)
+                   'Drug procurement crime': ['891100'], #Rauschgift-Beschaffungskriminalität
+                   'Damage to property': ['674000'], #Sachbeschädigung
     }
     
     # Defined age groups
@@ -428,15 +429,15 @@ if st.session_state['logged_in']:
     crime_german_to_english = {
         '010000, 020010': 'Homicide',
         '220000': 'Assault',
-        '100000': 'Sexual Offence',
-        '232100': 'Deprivation of Liberty',
+        '100000': 'Sexual offences',
+        '232100': 'Deprivation of liberty',
         '232200': 'Coercion',
-        '435*00': 'Burglary',
+        '435*00': 'Residential burglary',
         '*26*00': 'Shoplifting',
-        '21000': 'Robbery',
-        '730000': 'Drug/Narcotic Offence',
-        '891100': 'Drug/Narcotic Offence',
-        '674000': 'Damage to Property',
+        '210000': 'Robbery',
+        '730000': 'Drug offences (w/o procurement)',
+        '891100': 'Drug procurement crime',
+        '674000': 'Damage to property',
         'other': 'other'
     }
 
@@ -738,7 +739,7 @@ if st.session_state['logged_in']:
         
         st.markdown(f"""
                     <div style='border:1px solid; border-color: #e3e7ee; padding: 15px; border-radius: 10px;'>
-                        <h5 style='margin-bottom:0.5rem; padding-bottom:0rem;'>{arrow_up.format(size=32, color=blue)}&nbsp;&nbsp;Growth Rates</h5>
+                        <h5 style='margin-bottom:0.5rem; padding-bottom:0rem;'>{arrow_up.format(size=32, color=blue)}&nbsp;&nbsp;Growth Rates in %</h5>
                         <h6 style='margin-top:0rem; margin-bottom:0.5rem; padding-bottom:0rem;'>Absolute</h6>
                         <span style='margin-bottom: 0.7rem; display:block;'>
                         <b>State:</b> {st.session_state['federal_state']},
@@ -758,7 +759,7 @@ if st.session_state['logged_in']:
     with col6:
         st.markdown(f"""
                     <div style='border:1px solid; border-color: #e3e7ee; padding: 15px; border-radius: 10px;'>
-                    <h5 style='margin-bottom:0.5rem; padding-bottom:0rem;'>{arrow_up.format(size=32, color=blue)}&nbsp;&nbsp;Growth Rates</h5>
+                    <h5 style='margin-bottom:0.5rem; padding-bottom:0rem;'>{arrow_up.format(size=32, color=blue)}&nbsp;&nbsp;Growth Rates in %</h5>
                     <h6 style='margin-top:0rem; margin-bottom:0.5rem; padding-bottom:0rem;'>Relative</h6>
                     <span style='margin-bottom: 0.7rem; display:block;'>
                     <b>State:</b> {st.session_state['federal_state']},
