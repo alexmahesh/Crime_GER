@@ -492,7 +492,35 @@ if st.session_state['logged_in']:
     # Show the Dashboard
     # -------------------
 
-    st.markdown(f"<h3 style='margin-top:-0.5rem; padding-top:0; margin-bottom:1rem; padding-bottom:0rem;'>Juvenile Crime in Germany {st.session_state['year']}</h3>", unsafe_allow_html=True)
+
+    # --------------------------------------
+    # Corretions for displaying in Dashboard
+    # --------------------------------------
+
+    # Correct the Display of Gender
+    sex = ''
+    if st.session_state['gender'] == 'Male':
+        sex = 'M'
+    elif st.session_state['gender'] == 'Female':
+        sex = 'F'
+    else:
+        sex = 'X'
+    
+    # Correct the Display of age
+    age = ''
+    if st.session_state['age_group'] == '14 to <16':
+        age = '14 to under 16'
+    elif st.session_state['age_group'] == '16 to <18':
+        age = '16 to under 18'
+    elif st.session_state['age_group'] == '18 to <21':
+        age = '18 to under 21'
+    elif st.session_state['age_group'] == 'All':
+        #age_group 'All'
+        age = '14 to under 21'
+    
+
+    # st.markdown(f"<h3 style='margin-top:-0.5rem; padding-top:0; margin-bottom:1rem; padding-bottom:0rem;'>Juvenile Crime in Germany {st.session_state['year']}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='margin-top:-0.5rem; padding-top:0; margin-bottom:1rem; padding-bottom:0rem;'>Juvenile Crime in Germany</h3>", unsafe_allow_html=True)
 
     col1, col2 = st.columns([0.5, 0.5])
 
@@ -546,11 +574,14 @@ if st.session_state['logged_in']:
         fig1.update_mapboxes(center=dict(lat=51.4, lon=10.5)) #Flinsberg, middle of Germany
         fig1.update_coloraxes(showscale=True)
         # Show in Dashboard
+        
+        #sex -> {genders[st.session_state['gender']]}
+        #age -> {age_groups[st.session_state['age_group']]}
         st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Offenders {st.session_state['abs_rel']}</h6>", unsafe_allow_html=True)
         st.markdown(f"""<div style='margin-bottom:0.5rem; padding-bottom:0rem; font-size: 0.9em;'>
                             <b>Crime:</b> {st.session_state['crime_type']}<br>
-                            <b>Age:</b> {age_groups[st.session_state['age_group']]} &nbsp;&nbsp;&nbsp;
-                            <b>Gender:</b> {genders[st.session_state['gender']]} &nbsp;&nbsp;&nbsp;
+                            <b>Age:</b> {age} &nbsp;&nbsp;&nbsp;
+                            <b>Gender:</b> {sex} &nbsp;&nbsp;&nbsp;
                             <b>Year:</b> {st.session_state['year']}
                         </div>""", 
                         unsafe_allow_html=True
@@ -587,8 +618,8 @@ if st.session_state['logged_in']:
             # Show it in Dashboard
             st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Top 3 Crimes in {st.session_state['federal_state']}</h6>", unsafe_allow_html=True)
             st.markdown(f"""<div style='margin-bottom:0rem; padding-bottom:0rem; font-size: 0.9em;'>
-                            <b>Age:</b> {age_groups[st.session_state['age_group']]} &nbsp;&nbsp;&nbsp;
-                            <b>Gender:</b> {genders[st.session_state['gender']]} &nbsp;&nbsp;&nbsp;
+                            <b>Age:</b> {age} &nbsp;&nbsp;&nbsp;
+                            <b>Gender:</b> {sex} &nbsp;&nbsp;&nbsp;
                             <b>Year:</b> {st.session_state['year']}
                         </div>""", 
                         unsafe_allow_html=True
@@ -616,8 +647,8 @@ if st.session_state['logged_in']:
             # Show it in Dashboard
             st.markdown(f"<h6 style='margin-bottom:0rem; padding-bottom:0rem;'>Top 3 Crimes in {st.session_state['federal_state']}</h6>", unsafe_allow_html=True)
             st.markdown(f"""<div style='margin-bottom:0rem; padding-bottom:0rem; font-size: 0.9em;'>
-                            <b>Age:</b> {age_groups[st.session_state['age_group']]} &nbsp;&nbsp;&nbsp;
-                            <b>Gender:</b> {genders[st.session_state['gender']]} &nbsp;&nbsp;&nbsp;
+                            <b>Age:</b> {age} &nbsp;&nbsp;&nbsp;
+                            <b>Gender:</b> {sex} &nbsp;&nbsp;&nbsp;
                             <b>Year:</b> {st.session_state['year']}
                         </div>""", 
                         unsafe_allow_html=True
@@ -663,8 +694,8 @@ if st.session_state['logged_in']:
                     unsafe_allow_html=True
         )
         st.markdown(f"""<div style='margin-top:-0.4rem; padding-top:0; margin-bottom:0; padding-bottom:0; font-size: 0.9em;'>
-                        <b>Age:</b> {age_groups[st.session_state['age_group']]}, &nbsp;&nbsp;&nbsp;
-                        <b>Gender:</b> {genders[st.session_state['gender']]} &nbsp;&nbsp;&nbsp;
+                        <b>Age:</b> {age}, &nbsp;&nbsp;&nbsp;
+                        <b>Gender:</b> {sex} &nbsp;&nbsp;&nbsp;
                         <b>Year:</b> {st.session_state['year']}
                     </div>""", 
                     unsafe_allow_html=True
@@ -674,7 +705,7 @@ if st.session_state['logged_in']:
         # st.dataframe(df3)
     
 
-    st.markdown(f"<h4 style='margin-bottom:1.5rem; padding-bottom:0rem;'>Overview of Years</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='margin-top:0; padding-top:0; margin-bottom:1.5rem; padding-bottom:0rem;'>Overview of Years</h4>", unsafe_allow_html=True)
 
     # ----------------------------
     # Growth Rate (Just Numbers)
@@ -745,8 +776,8 @@ if st.session_state['logged_in']:
                         <b>State:</b> {st.session_state['federal_state']},
                         <b>Year:</b> {st.session_state['year']},
                         <b>Crime:</b> {st.session_state['crime_type']}<br>
-                        <b>Age:</b> {age_groups[st.session_state['age_group']]},
-                        <b>Gender:</b> {genders[st.session_state['gender']]}<br>
+                        <b>Age:</b> {age},
+                        <b>Gender:</b> {sex}<br>
                         </span>
                         <span class=box><span style='font-size:0.8rem;'>2018</span><br><span style='font-size:1.1rem;'>{abso[2018][0]}</span><br>{abso[2018][1]}</span>
                         <span class=box><span style='font-size:0.8rem;'>2019</span><br><span style='font-size:1.1rem;'>{abso[2019][0]}</span><br>{abso[2019][1]}</span>
@@ -765,8 +796,8 @@ if st.session_state['logged_in']:
                     <b>State:</b> {st.session_state['federal_state']},
                     <b>Year:</b> {st.session_state['year']},
                     <b>Crime:</b> {st.session_state['crime_type']}<br>
-                    <b>Age:</b> {age_groups[st.session_state['age_group']]},
-                    <b>Gender:</b> {genders[st.session_state['gender']]}<br>
+                    <b>Age:</b> {age},
+                    <b>Gender:</b> {sex}<br>
                     </span>
                     <span class=box><span style='font-size:0.8rem;'>2018</span><br><span style='font-size:1.1rem;'>{rela[2018][0]}</span><br>{rela[2018][1]}</span>
                     <span class=box><span style='font-size:0.8rem;'>2019</span><br><span style='font-size:1.1rem;'>{rela[2019][0]}</span><br>{rela[2019][1]}</span>
