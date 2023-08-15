@@ -197,6 +197,8 @@ if st.session_state['logged_in']:
             data.append(tmp)
         df_data = pd.DataFrame(data)
         df_data.columns = ['schluessel', 'crime_type', 'percentage']
+        # Try translation of crime types from german to english
+        df_data['crime_type'] = df_data['crime_type'].apply(lambda x: crime_german_to_english[ df_data.query("crime_type==@x")[['schluessel']].iat[0,0] ])
         # return new dataframe
         return df_data
     
@@ -246,6 +248,8 @@ if st.session_state['logged_in']:
             ])
         df_data = pd.DataFrame(data)
         df_data.columns = ['schluessel', 'crime_type', 'percentage']
+        # Try translation of crime types from german to english
+        df_data['crime_type'] = df_data['crime_type'].apply(lambda x: crime_german_to_english[ df_data.query("crime_type==@x")[['schluessel']].iat[0,0] ])
         # return new dataframe
         return df_data
     
@@ -606,8 +610,17 @@ if st.session_state['logged_in']:
             fig2 = px.bar(df2, 
                           x='crime_type', 
                           y='percentage',
-                          height = 300,
-                        #   title=f"Top Crimes in {st.session_state['federal_state']}"
+                          height = 360,
+                          text = 'percentage', #show values in chart
+                          labels = {
+                            'crime_type': 'Crime',
+                            'percentage': 'Percentage'
+                          },
+                          hover_name = 'crime_type',
+                          hover_data = {
+                              'crime_type': False,
+                              'percentage': True
+                          }
             )
             fig2.update_xaxes(tickangle=-45)
             fig2.update_xaxes(type='category')
@@ -635,8 +648,17 @@ if st.session_state['logged_in']:
             fig2 = px.bar(df2, 
                           x='crime_type', 
                           y='percentage',
-                          height = 300,
-                        #   title=f"Top Crimes in {st.session_state['federal_state']}"
+                          height = 360,
+                          text = 'percentage', #show values in chart
+                          labels = {
+                            'crime_type': 'Crime',
+                            'percentage': 'Percentage'
+                          },
+                          hover_name = 'crime_type',
+                          hover_data = {
+                              'crime_type': False,
+                              'percentage': True
+                          }
             )
             fig2.update_xaxes(tickangle=-45)
             fig2.update_xaxes(type='category')
@@ -693,7 +715,7 @@ if st.session_state['logged_in']:
                     </div>""", 
                     unsafe_allow_html=True
         )
-        st.markdown(f"""<div style='margin-top:-0.4rem; padding-top:0; margin-bottom:0; padding-bottom:0; font-size: 0.9em;'>
+        st.markdown(f"""<div style='padding-top:0; margin-bottom:0; padding-bottom:0; font-size: 0.9em;'>
                         <b>Age:</b> {age}, &nbsp;&nbsp;&nbsp;
                         <b>Gender:</b> {sex} &nbsp;&nbsp;&nbsp;
                         <b>Year:</b> {st.session_state['year']}
