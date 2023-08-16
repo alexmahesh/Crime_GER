@@ -853,7 +853,7 @@ if st.session_state['logged_in']:
         fig4.update_layout(margin = dict(l=0, t=25, r=0, b=0), height=250)
         fig4.update_layout(
             xaxis_title = 'Year',
-            yaxis_title = 'Number of Crimes'
+            yaxis_title = 'No. Offenders'
         )
         fig4.update_traces(line_color="#1a60bc")
         # Show on Dashboard        
@@ -880,7 +880,7 @@ if st.session_state['logged_in']:
         fig5.update_layout(margin = dict(l=0, t=25, r=0, b=0), height=250)
         fig5.update_layout(
             xaxis_title = 'Year',
-            yaxis_title = 'Number of Crimes'
+            yaxis_title = 'No. Offenders / 100.000'
         )
         fig5.update_traces(line_color="#1a60bc")
         # Show on Dashboard        
