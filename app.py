@@ -13,6 +13,8 @@
 import json
 import pandas as pd
 import streamlit as st
+from streamlit_extras.switch_page_button import switch_page
+# from st_pages import Page, show_pages, hide_pages
 import plotly.express as px
 import psycopg2
 
@@ -52,6 +54,9 @@ st.markdown("""<style>.appview-container .main footer {visibility: hidden;}</sty
 # Remove the decoration on top of Streamlit page
 st.markdown("""<style>.css-1dp5vir {visibility: hidden;}</style>""", unsafe_allow_html=True)
 
+# Hide Multipage Buttons on top of sidebar
+st.markdown("<style>.css-79elbk {display: none;}</style>", unsafe_allow_html=True)
+
 
 # ----------------------------------------------------
 # Log-in
@@ -72,17 +77,17 @@ def check_password():
     del st.session_state['password'] # delete entered password
 
 # Show the input field for the password
-# if 'logged_in' not in st.session_state:
-#     # The very first run of the app, no password entered yet
-#     st.session_state['logged_in'] = False
-#     st.text_input('Password', type='password', on_change=check_password, key='password')
-# elif not st.session_state['logged_in']:
-#     # User has input wrong password
-#     st.text_input('Password', type='password', on_change=check_password, key='password')
-#     st.error('🧐 Wrong Password')
+if 'logged_in' not in st.session_state:
+    # The very first run of the app, no password entered yet
+    st.session_state['logged_in'] = False
+    st.text_input('Password', type='password', on_change=check_password, key='password')
+elif not st.session_state['logged_in']:
+    # User has input wrong password
+    st.text_input('Password', type='password', on_change=check_password, key='password')
+    st.error('🧐 Wrong Password')
 
 # Remove after end of development and uncomment upper block
-st.session_state['logged_in'] = True
+# st.session_state['logged_in'] = True
 
 
 # ----------------------------
@@ -466,7 +471,7 @@ if st.session_state['logged_in']:
     # (The sidebar of the app with dashboard controls and further info's)
     # -------------------------------------------------------------------------
     with st.sidebar:
-        st.subheader('Dashboard Controls')
+        st.markdown("<h3 style='margin-top:1rem;'>Dashboard Controls</h3>", unsafe_allow_html = True)
         st.slider(':calendar: Year', key='year', min_value=min(years), max_value=max(years))
         st.selectbox(':flag-de: Federal State', federal_states, key='federal_state')
         st.selectbox(' Age Group', age_groups, key='age_group')
@@ -489,7 +494,9 @@ if st.session_state['logged_in']:
 
         st.markdown("<hr style='margin-top:0.5rem; margin-bottom:0.1; padding-top:0; padding-bottom:0;'>", unsafe_allow_html=True)
 
-        st.caption('Impressum')
+        impressum_de = st.button("Impressum")
+        if impressum_de:
+            switch_page("impressum_de")
     
 
     # -------------------
