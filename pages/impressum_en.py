@@ -69,7 +69,7 @@ with col2:
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>References</h6>", unsafe_allow_html=True)
     st.markdown("""
                 For this project, we used the following data sources:     
-                - [PKS Bundeskriminalamt, 2018 - 2022](https://www.bka.de/DE/AktuelleInformationen/StatistikenLagebilder/PolizeilicheKriminalstatistik/pks_node.html)   
+                - [PKS Bundeskriminalamt, 2018 - 2022, Version 2.0](https://www.bka.de/DE/AktuelleInformationen/StatistikenLagebilder/PolizeilicheKriminalstatistik/pks_node.html)   
                 - [Statistisches Bundesamt DESTATIS](https://www.destatis.de/DE/Home/_inhalt.html)   
                 """)
     
@@ -80,19 +80,16 @@ with col2:
                 Ernst-Horn-Str. 18b  
                 22525 Hamburg   
                 Email:  johanna.kpk@googlemail.com  
-                Mobil:  +49 1511 5619288  
 
                 Julie Laur  
                 Schanzenstr. 33a  
                 20357 Hamburg   
-                Email:  julie.laur648@gmail.com
-                Mobil:  +49 162 4531144
+                Email:  julie.laur648@gmx.de  
 
                 Alexander Schuppe  
                 Eimsbütteler Chaussee 85  
                 20259 Hamburg  
                 Email: mail@alexanderschuppe.de  
-                Mobil: +49 176 43399885  
                 """)
     
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Privacy policy</h6>", unsafe_allow_html=True)
@@ -107,7 +104,7 @@ with col2:
                 - Python, Pandas, Numpy, Jupyter Notebook  
                 - SQL, PostgreSQL, Azure, DBeaver  
                 - GitHub/Git  
-                - MS Excel, Google Slides  
+                - MS Excel, Google Docs Editors  
                 - VSCode, Google Docs, Google Slides  
 
                 """)
