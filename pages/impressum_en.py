@@ -76,16 +76,23 @@ with col2:
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Legal Notice</h6>", unsafe_allow_html=True)
     st.markdown("""
                 Responsible for the content:  
-                Johanna Köpke   
-                Julie Laur   
-                Alexander Schuppe  
+                Johanna Köpke  
+                Ernst-Horn-Str. 18b  
+                22525 Hamburg   
+                Email:  johanna.kpk@googlemail.com  
+                Mobil:  +49 1511 5619288  
 
-                Accessible via:  
-                neue fische - School and Pool for Digital Talent  
-                Gasstraße  6A  
-                22761 Hamburg  
-                Telefon: +49 40 22859616  
-                Email: studienberatung@neuefische.de  
+                Julie Laur  
+                Schanzenstr. 33a  
+                20357 Hamburg   
+                Email:  julie.laur648@gmail.com
+                Mobil:  +49 162 4531144
+
+                Alexander Schuppe  
+                Eimsbütteler Chaussee 85  
+                20259 Hamburg  
+                Email: mail@alexanderschuppe.de  
+                Mobil: +49 176 43399885  
                 """)
     
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Privacy policy</h6>", unsafe_allow_html=True)
