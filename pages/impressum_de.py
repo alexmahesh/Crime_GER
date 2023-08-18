@@ -40,13 +40,16 @@ st.markdown("""<style>.css-1dp5vir {visibility: hidden;}</style>""", unsafe_allo
 # Hide Multipage Buttons on top of sidebar
 st.markdown("<style>.css-79elbk {display: none;}</style>", unsafe_allow_html=True)
 
+# Hide arrow of sidebar
+st.markdown("<style>.eyeqlp51 {display: none;}</style>", unsafe_allow_html=True)
 
 
 
 # ---------------------
 # Show on page
 # ---------------------
-col1, col2, col3 = st.columns([0.3, 0.6, 0.1])
+english = st.button('🇬🇧')
+col1, col2, col3 = st.columns([0.2, 0.6, 0.2])
 
 with col2:
     st.markdown(f"<h3 style='margin-top:-0.5rem; padding-top:0; margin-bottom:1rem; padding-bottom:0rem;'>Juvenile Crime in Germany</h3>", unsafe_allow_html=True)
@@ -64,21 +67,58 @@ with col2:
                 """)
 
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Quellenangaben</h6>", unsafe_allow_html=True)
-    st.markdown("""Für dieses Projekt haben wir die folgenden Datenquellen verwendet:  
-                - [PKS Bundeskriminalamt, 2018 - 2022](https://www.bka.de/DE/AktuelleInformationen/StatistikenLagebilder/PolizeilicheKriminalstatistik/pks_node.html)  
-                - [Statistisches Bundesamt DESTATIS](https://www.destatis.de/DE/Home/_inhalt.html)  
+    st.markdown("""
+                Für dieses Projekt haben wir die folgenden Datenquellen verwendet:   
+                - [PKS Bundeskriminalamt, 2018 - 2022](https://www.bka.de/DE/AktuelleInformationen/StatistikenLagebilder/PolizeilicheKriminalstatistik/pks_node.html)   
+                - [Statistisches Bundesamt DESTATIS](https://www.destatis.de/DE/Home/_inhalt.html)   
                 """)
     
-    st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Responsible</h6>", unsafe_allow_html=True)
+    st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Impressum</h6>", unsafe_allow_html=True)
+    st.markdown("""
+                Verantwortlich für den Inhalt:  
+                Johanna Köpke   
+                Julie Laur   
+                Alexander Schuppe  
 
+                Erreichbar über:  
+                neue fische - School and Pool for Digital Talent  
+                Gasstraße  6A  
+                22761 Hamburg  
+                Telefon: +49 40 22859616  
+                Email: studienberatung@neuefische.de  
+                """)
+    
+    st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Datenschutz</h6>", unsafe_allow_html=True)
+    st.markdown("""
+                Dieses Dashboard speichert keine persönlichen Daten und verwendet keine Cookies.  
+                Die Seite verwendet das kostenlose Hosting-Angebot von [Streamlit](https://streamlit.io/). Nähere Informationen zu deren Datenschutzangaben finden sie unter: [Streamlit Privacy Policy](https://streamlit.io/privacy-policy)  
+                """, unsafe_allow_html=True)
+
+    st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Technik</h6>", unsafe_allow_html=True)
+    st.markdown("""
+                Für die Erstellung des Dashboards wurden die folgenden Techniken verwendet:  
+                - Python, Pandas, Numpy, Jupyter Notebook  
+                - SQL, PostgreSQL, Azure, DBeaver  
+                - GitHub/Git  
+                - MS Excel, Google Slides  
+                - VSCode, Google Docs, Google Slides  
+
+                """)
+    
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Haftungsausschluss</h6>", unsafe_allow_html=True)
     st.markdown("""
-                Dieses Projekt ist weder mit dem Bundeskriminalamt (BKA) noch mit demStatistischen Bundesamt (Destatis) verbunden, 
+                Dieses Projekt ist weder mit dem Bundeskriminalamt (BKA) noch mit dem Statistischen Bundesamt (Destatis) verbunden, 
                 aber es werden deren offizielle, frei zugängliche Daten verwendet.  
-                Es werden keine Garantien für die Richtigkeit der hier dargestellten Daten übernommen.  
+                Es werden keine Garantien für die Richtigkeit der hier dargestellten Daten und Zusammenhänge übernommen.  
                 """)
 
-    st.markdown("")
+    st.write('')
+    st.write('')
     back = st.button("Zurück zum Dashboard")
+    st.write('')
+    st.write('')
+
     if back:
         switch_page("app")
+    elif english:
+        switch_page('impressum_en')
