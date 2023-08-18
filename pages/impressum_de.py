@@ -105,7 +105,7 @@ with col2:
                 - Python, Pandas, Numpy, Jupyter Notebook  
                 - SQL, PostgreSQL, Azure, DBeaver  
                 - GitHub/Git  
-                - MS Excel, Google Dics Editors   
+                - MS Excel, Google Docs Editors   
                 - VSCode  
 
                 """)

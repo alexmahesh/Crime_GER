@@ -105,7 +105,7 @@ with col2:
                 - SQL, PostgreSQL, Azure, DBeaver  
                 - GitHub/Git  
                 - MS Excel, Google Docs Editors  
-                - VSCode, Google Docs, Google Slides  
+                - VSCode  
 
                 """)
     
