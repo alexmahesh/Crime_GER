@@ -852,8 +852,9 @@ if st.session_state['logged_in']:
                                         genders[st.session_state['gender']]
         )
         fig4 = px.line(
-            x=df4['year'], 
-            y=df4['offenders'], 
+            df4,
+            x='year', 
+            y='offenders', 
             markers=True,
         )
         fig4.update_xaxes(type='category') #set to categorical datatype so that on x-axis no in between values are calculated by plotly
@@ -879,8 +880,9 @@ if st.session_state['logged_in']:
                                         genders[st.session_state['gender']]
         )
         fig5 = px.line(
-            x=df5['year'], 
-            y=df5['offenders_rel'], 
+            df5,
+            x='year', 
+            y='offenders_rel', 
             markers=True,
         )
         fig5.update_xaxes(type='category') #set to categorical datatype so that on x-axis no in between values are calculated by plotly
