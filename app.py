@@ -355,10 +355,10 @@ if st.session_state['logged_in']:
     # --------------------------------------
     
     # Load dataframes from Postgres database
-    df_bund_abs = get_dataframe("SELECT * FROM public.bund_jugend_tat_absolut_2022_until_2018;")
-    df_bund_rel = get_dataframe("SELECT * FROM public.bund_jugend_tat_relativ_2022_until_2018;")
-    df_laender_abs = get_dataframe("SELECT * FROM public.laender_jugend_tat_absolut_2022_until_2018;")
-    df_laender_rel = get_dataframe("SELECT * FROM public.laender_jugend_tat_relativ_2022_until_2018;")
+    # df_bund_abs = get_dataframe("SELECT * FROM public.bund_jugend_tat_absolut_2022_until_2018;")
+    # df_bund_rel = get_dataframe("SELECT * FROM public.bund_jugend_tat_relativ_2022_until_2018;")
+    # df_laender_abs = get_dataframe("SELECT * FROM public.laender_jugend_tat_absolut_2022_until_2018;")
+    # df_laender_rel = get_dataframe("SELECT * FROM public.laender_jugend_tat_relativ_2022_until_2018;")
     df_overview_fed_states = get_dataframe("SELECT * FROM public.df_overview_fed_states_2022_until_2018;")
     df_overview_state = get_dataframe("SELECT * FROM public.df_overview_state_2022_until_2018;")
     df_distribution_crime = get_dataframe("SELECT * FROM public.df_distribution_crime_2022_until_2018;")
