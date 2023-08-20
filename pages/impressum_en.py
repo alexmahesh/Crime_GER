@@ -60,7 +60,7 @@ with col2:
     st.markdown("""
                 This dashboard is part of the final project of the [neue fische](https://www.neuefische.de/) _Advanced Data Analyst Bootcamp_ (May bis August 2023).  
                 Our team consists of:  
-                - [Johanna Köpke]()  
+                - [Johanna Köpke](https://www.linkedin.com/in/johanna-koepke/)  
                 - [Julie Laur](https://www.linkedin.com/in/julie-laur-a4167713a/)  
                 - [Alexander Schuppe](https://www.linkedin.com/in/alexander-schuppe/)  
 

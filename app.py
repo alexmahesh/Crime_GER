@@ -490,7 +490,7 @@ if st.session_state['logged_in']:
             st.image('img/linkedin_icon.png', width=20)
         with sidebar_col2:
             st.markdown("""Visit us  
-                        [Johanna Köpke]()  
+                        [Johanna Köpke](https://www.linkedin.com/in/johanna-koepke/)  
                         [Julie Laur](https://www.linkedin.com/in/julie-laur-a4167713a/)  
                         [Alexander Schuppe](https://www.linkedin.com/in/alexander-schuppe/)  
                         """)
