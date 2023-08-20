@@ -55,6 +55,7 @@ with col2:
     st.markdown(f"<h3 style='margin-top:-0.5rem; padding-top:0; margin-bottom:1rem; padding-bottom:0rem;'>Juvenile Crime in Germany</h3>", unsafe_allow_html=True)
     st.markdown(f"<h5 style='margin-top:0; padding-top:0; margin-bottom:0; padding-bottom:0rem;'>Impressum</h5>", unsafe_allow_html=True)
 
+    # Allgemeines
     st.markdown(f"<h6 style='margin-top:2rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Allgemeines</h6>", unsafe_allow_html=True)
     st.markdown("""
                 Dieses Dashboard ist Teil des Abschlussprojektes des [neue fische](https://www.neuefische.de/) _Advanced Data Analyst Bootcamp_ (Mai bis August 2023).  
@@ -66,6 +67,7 @@ with col2:
                 Wenn sie Interesse an unserer Arbeit haben, kontaktieren sie uns gerne.  
                 """)
 
+    # Quellenangaben
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Quellenangaben</h6>", unsafe_allow_html=True)
     st.markdown("""
                 Für dieses Projekt haben wir die folgenden Datenquellen verwendet:   
@@ -73,6 +75,29 @@ with col2:
                 - [Statistisches Bundesamt DESTATIS](https://www.destatis.de/DE/Home/_inhalt.html)   
                 """)
     
+    # Scope
+    st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Scope</h6>", unsafe_allow_html=True)
+    st.markdown("""
+                Die Täterzahlen wurden für die folgenden Straftaten analysiert.  
+                Die relativen Täterzahlen wurden anhand der Bevölkerungszahlen in den jeweiligen Altersgruppen berechnet. Verwendet wurden die Bevölkerungszahlen vom 31. Dezember des jeweiligen Vorjahres (Stichtag).  
+                """)
+    st.markdown("""| BKA Schluessel | Crime German | Crime English |  
+| -------------- | -------------------------------------------------------- | ------------------------------- |  
+| ------ | Straftaten insgesamt | Total offences |  
+| 100000 | Straftaten gegen die sexuelle Selbstbestimmung insgesamt | Sexual offences |  
+| 210000 | Raub, räuberische Erpressung und räuberischer Angriff auf Kraftfahrer §§ 249-252, 255, 316a StGB | Robbery |  
+| 220000 | Körperverletzung §§ 223-227, 229, 231 StGB | Assault |  
+| 232100 | Freiheitsberaubung § 239 StGB | Deprivation of liberty |  
+| 232200 | Nötigung § 240 StGB | Coercion |  
+| 435*00 | Wohnungseinbruchdiebstahl §§ 244 Abs. 1 Nr. 3 und Abs. 4, 244a StGB | Residential burglary |  
+| *26*00 | Ladendiebstahl insgesamt | Shoplifting |  
+| 674000 | Sachbeschädigung §§ 303-305a StGB | Damage to property |  
+| 730000 | Rauschgiftdelikte (soweit nicht bereits mit anderer Schlüsselzahl erfasst) | Drug offences (w/o procurement) |  
+| 891100 | direkte Beschaffungskriminalität | Drug procurement crime |  
+| 010000, 020010 | Mord § 211 StGB, Totschlag § 212 StGB | Homicide |  
+""")
+    
+    # Impressum
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Impressum</h6>", unsafe_allow_html=True)
     st.markdown("""
                 Verantwortlich für den Inhalt:  
@@ -93,12 +118,14 @@ with col2:
                 
                 """)
     
+    # Datenschutz
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Datenschutz</h6>", unsafe_allow_html=True)
     st.markdown("""
                 Dieses Dashboard speichert keine persönlichen Daten und verwendet keine Cookies.  
                 Die Seite verwendet das kostenlose Hosting-Angebot von [Streamlit](https://streamlit.io/). Nähere Informationen zu deren Datenschutzangaben finden sie unter: [Streamlit Privacy Policy](https://streamlit.io/privacy-policy)  
                 """, unsafe_allow_html=True)
 
+    # Technik
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Technik</h6>", unsafe_allow_html=True)
     st.markdown("""
                 Für die Erstellung des Dashboards wurden die folgenden Techniken verwendet:  
@@ -110,6 +137,7 @@ with col2:
 
                 """)
     
+    # Haftungsausschluss
     st.markdown(f"<h6 style='margin-top:3rem; padding-top:0; margin-bottom:0.3rem; padding-bottom:0rem;'>Haftungsausschluss</h6>", unsafe_allow_html=True)
     st.markdown("""
                 Dieses Projekt ist weder mit dem Bundeskriminalamt (BKA) noch mit dem Statistischen Bundesamt (Destatis) verbunden, 
