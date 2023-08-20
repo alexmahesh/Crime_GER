@@ -152,6 +152,8 @@ if st.session_state['logged_in']:
             (df_laender_abs_rel['age_group'] == age_group) &
             (df_laender_abs_rel['sexus'] == gender)
         ]
+        # Try translation of crime types from german to english
+        df_map['straftat'] = df_map['straftat'].apply(lambda x: crime_german_to_english[ df_map.query("straftat==@x")[['schluessel']].iat[0,0] ])
         return df_map
     
 
@@ -436,6 +438,7 @@ if st.session_state['logged_in']:
 
     # Translate keys of crimes to shortened english names
     crime_german_to_english = {
+        '------': 'All',
         '010000, 020010': 'Homicide',
         '220000': 'Assault',
         '100000': 'Sexual offences',
