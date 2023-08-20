@@ -696,6 +696,8 @@ if st.session_state['logged_in']:
         fig3 = px.pie(
             df3, 
             values='certain_crime_percent_of_total_crime', 
+            labels = {'certain_crime_percent_of_total_crime': 'Percent of total crime',
+                      'straftat': 'Crime'},
             names='straftat', 
             height = 450,
 
