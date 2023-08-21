@@ -2,10 +2,8 @@
 ## Distribution and Frequency Development  
 <br>
 
-### To Alexandra and Sergio  
+### Structure of the app.py file  
 ---
-Please review the <a href='https://github.com/alexmahesh/Crime_GER/blob/main/app.py' target='_blank'>app.py</a> file.  
-You can find the running Dashboard here: <a href='https://crime-germany.streamlit.app/' target='_blank'>Juvenile Crime in Germany</a> (password as communicated).  
 
 __To your help:__  
 When using and trying out the dashboard, the user instructions further down might help you.  
@@ -20,27 +18,23 @@ This also means that any information stored in variables is lost as soon as the 
 
 __Control Flow of the script:__  
 1. As usual at first the needed python libraries are imported.  
-1. Then some Streamlit internal configurations are made.  
-1. A password protection for the Dashboard is implemented, so not everybody can use the Dashboard.  
-1. Secret information (like password or database credentials) are stored and provided with a Streamlit intern mechanism via a so called _secrets.toml_ file (similar to the _.env_ file). This file is added to _.gitignore_ and not uploaded on GitHub.  
+2. Then some Streamlit internal configurations are made.  
+3. A password protection for the Dashboard is implemented, so not everybody can use the Dashboard.  
+4. Secret information (like password or database credentials) are stored and provided with a Streamlit intern mechanism via a so called _secrets.toml_ file (similar to the _.env_ file). This file is added to _.gitignore_ and not uploaded on GitHub.  
 1.Then all the functions that are needed follow. Every Chart on the dashboard has it's own function to deliver the data needed to draw it, so that it is easier to react to user interactions.  
 1. The first function _get_dataframe(query)_ connects to the postgres database on Azure, can run queries to the database and return pandas dataframes.  
-1. All needed Dataframes are loaded at the beginning into the script. They are cached so that they will only be loaded once. One _.json_ file is loaded, containing the geospatial information about the federal states for the map charts.  
-1. The needed session variables are created and initialized. They provide the starting state for all the controls in the sidebar (e.g. setting the _year_ to 2022).  
-1. Some dictionaries are defined for translating complicated names and keys like column names in SQL databases to userfriendly names in the controls in the sidebar.  
-1. The elements of the sidebar are created.  
-1. Finally the elements of the dashboard are printed to the html page. The html file is divided and structured with the help of the two Streamlit elements _Tabs_ and _Columns_.  
-
-### Next ToDo  
----
-- implement the possibility to choose between absolute and relative numbers  
-- implement Federal States Tab 
+2. All needed Dataframes are loaded at the beginning into the script. They are cached so that they will only be loaded once. One _.json_ file is loaded, containing the geospatial information about the federal states for the map charts.  
+3. The needed session variables are created and initialized. They provide the starting state for all the controls in the sidebar (e.g. setting the _year_ to 2022).  
+4. Some dictionaries are defined for translating complicated names and keys like column names in SQL databases to userfriendly names in the controls in the sidebar.  
+5. The elements of the sidebar are created.  
+6. Finally the elements of the dashboard are printed to the html page. The html file is divided and structured with the help of the two Streamlit elements _Tabs_ and _Columns_.  
+ 
 
 ### Overview  
 ---
 This is the Dashboard for our capstone project in the Data Analyst Bootcamp of neuefische (may to august 2023).  
 We are:  
-- <a href='#'>Johanna Köpke</a>  
+- <a href='https://www.linkedin.com/in/johanna-koepke/' target='_blank'>Johanna Köpke</a>  
 - <a href='https://www.linkedin.com/in/julie-laur-a4167713a/' target='_blank'>Julie Laur</a>  
 - <a href='https://www.linkedin.com/in/alexander-schuppe/' target='_blank'>Alexander Schuppe</a>  
 
