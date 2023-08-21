@@ -89,8 +89,8 @@ with col2:
 | 220000 | Körperverletzung §§ 223-227, 229, 231 StGB | Assault |  
 | 232100 | Freiheitsberaubung § 239 StGB | Deprivation of liberty |  
 | 232200 | Nötigung § 240 StGB | Coercion |  
-| 435*00 | Wohnungseinbruchdiebstahl §§ 244 Abs. 1 Nr. 3 und Abs. 4, 244a StGB | Residential burglary |  
-| *26*00 | Ladendiebstahl insgesamt | Shoplifting |  
+| 435\*00 | Wohnungseinbruchdiebstahl §§ 244 Abs. 1 Nr. 3 und Abs. 4, 244a StGB | Residential burglary |  
+| \*26\*00 | Ladendiebstahl insgesamt | Shoplifting |  
 | 674000 | Sachbeschädigung §§ 303-305a StGB | Damage to property |  
 | 730000 | Rauschgiftdelikte (soweit nicht bereits mit anderer Schlüsselzahl erfasst) | Drug offences (w/o procurement) |  
 | 891100 | direkte Beschaffungskriminalität | Drug procurement crime |  
