@@ -153,7 +153,7 @@ if st.session_state['logged_in']:
             (df_laender_abs_rel['sexus'] == gender)
         ]
         # Try translation of crime types from german to english
-        # df_map['straftat'] = df_map['straftat'].apply(lambda x: crime_german_to_english[ df_map.query("straftat==@x")[['schluessel']].iat[0,0] ])
+        df_map['straftat'] = df_map['bundesland'].apply(lambda x: crime_german_to_english[  df_map.query("bundesland==@x")[['schluessel']].iat[0,0]   ]) # x ist die bundesland
         return df_map
     
 
