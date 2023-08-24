@@ -2,6 +2,9 @@
 ## Distribution and Frequency Development  
 <br>
 
+### Link to the dashboard/app
+(https://crime-germany.streamlit.app/)[https://crime-germany.streamlit.app/]  
+
 ### Structure of the app.py file  
 ---
 
