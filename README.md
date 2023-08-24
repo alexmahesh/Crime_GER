@@ -38,7 +38,7 @@ __Control Flow of the script:__
 
 ### Overview  
 ---
-This is the Dashboard for our capstone project in the Data Analyst Bootcamp of neuefische (may to august 2023).  
+This is the Dashboard for our capstone project in the Advanced Data Analyst Bootcamp of neuefische (may to august 2023).  
 We are:  
 - <a href='https://www.linkedin.com/in/johanna-koepke/' target='_blank'>Johanna Köpke</a>  
 - <a href='https://www.linkedin.com/in/julie-laur-a4167713a/' target='_blank'>Julie Laur</a>  
