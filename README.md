@@ -69,50 +69,36 @@ The Charts are created with the Python <a href='https://plotly.com/' target='_bl
 <img src='img/side_controls.png' height='300' />  <br>
 The Dashboard has several controls that are located in the sidebar on the left. The sidebar can be opened or hidden.  
 
-### __Tabs__  
-<img src='img/tabs.png' height='70'/>  <br>
-The Dashboard currently has 3 Tabs to show different information:  
-
-- Germany-Tab : Showing an overview information about juvenile crime rates in whole Germany.  
-- States-Tab : Showing more specialized information about the juvenile crime rates in the federal states of Germany.  
-- Cities-Tab : Showing specialized information about juvenile crime rates in the top 7 cities (concerning number of residents) of Germany.  
-
-### __Germany-Tab__  
----
-On this tab you can change:  
-- Year (choosing between 2018 to 2022),  
-- Crime Type (choosing between selected crime types that are relevant for Juveniles),  
+### __Controls__  
+The Dashboard has several controls you can use to actively change, what the charts are showing.  
+You can change:  
+- Year (choosing between 2018 to 2022),
+- Federal State (choosing Germany as country or one of it's 16 federal states),
 - Age Group (choosing between defined age groups that are relevant for german laws),  
-- Gender (differentiating between female and male).  
+- Crime Type (choosing between selected crime types that are relevant for Juveniles),  
+- Gender (differentiating between female and male).
+Beneath the map you find another control to change between absolute and relative values.  
+The Reset-Button resets all values to their starting point.
 
-Interacting with the _Federal State_ dropdown will have no effect, because this is reserved for the States-Tab.  
-<br>
+Not all charts are reacting to all controls. E.g. the map always shows all 16 federal states (no matter which state you choose).
 
-__Map on Germany-Tab__  
-Showing crime distribution over whole Germany.  
+__Map__  
+The map on the top left is showing crime distribution over whole Germany.  
 <img src='img/map.png' height='200'/>  
 <br>
 
-__Linechart on Germany-Tab__  
-Showing absolute crime rate over years.  
+__Barchart__  
+The bar chart on the top right is showing the top 3 crimes committed in the selected federal state.  
+
+__Piechart__  
+The pie chart underneath is showing the distribution of selected types of crime that are relevant for Juveniles.  
+<img src='img/piechart.png' height='180'/>  
+
+__Overview of Years__
+The overview is showing the growth rates from one year to the next, on the left the absolute numbers, on the right the relative numbers calculated for 100.000 inhabitants.  
+
+__Linecharts__  
+The line charts on the bottom are showing the absolute and relative crime rate over years.  
 <img src='img/linechart.png' height='200'/>  
 <br>
 
-__Piechart on Germany-Tab__  
-Showing distribution of selected types of crime that are relevant for Juveniles.  
-<img src='img/piechart.png' height='180'/>  
-<br>
-
-### __States-Tab__  
----
-Will be implemented next.  
-On this tab you can change/find:  
-- The same controls as on the Germany tab  
-- Federal States (choosing out of the 16 federal states of Germany to see more detailed Information)  
-- Information about the top 3 ranked crimes per state  
-<br>
-
-### __Cities-Tab__  
----
-Will be implemented if there is time left in the project.  
-Will show detail information about the 7 top cities of Germany (concerning number of inhabitants). 
