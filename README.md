@@ -3,7 +3,7 @@
 <br>
 
 ### Link to the dashboard/app
-<a href='https://crime-germany.streamlit.app/>https://crime-germany.streamlit.app</a>  
+<a href='https://crime-germany.streamlit.app/'>https://crime-germany.streamlit.app</a>  
 
 ### Structure of the app.py file  
 ---
