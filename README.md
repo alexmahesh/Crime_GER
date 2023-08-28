@@ -4,7 +4,7 @@
 
 ### This Capstone Project  
 This capstone project is a collaborative work of <a href='https://www.linkedin.com/in/johanna-koepke/' target='_blank'>Johanna Köpke</a>, <a href='https://www.linkedin.com/in/julie-laur-a4167713a/' target='_blank'>Julie Laur</a> and me <a href='https://www.linkedin.com/in/alexander-schuppe/' target='_blank'>Alexander Schuppe</a>.  
-You find the code for the data preparation, cleaning and analysis part on: <a href='https://github.com/JulieLaur/capstone_al_jo_ju' target='_blank'>https://github.com/JulieLaur/capstone_al_jo_ju</a>.  
+You find the code for the data preparation, cleaning and analysis part on: <a href='https://github.com/JulieLaur/Juvenile_crime_in_Germany' target='_blank'>https://github.com/JulieLaur/Juvenile_crime_in_Germany</a>.  
 The code for the dashboard is in this repo.  
 If you want to try out the working dashboard, you can go to: <a href='https://crime-germany.streamlit.app/'>https://crime-germany.streamlit.app</a>  
 
