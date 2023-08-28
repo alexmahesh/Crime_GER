@@ -64,6 +64,8 @@ with col2:
                 - [Julie Laur](https://www.linkedin.com/in/julie-laur-a4167713a/)  
                 - [Alexander Schuppe](https://www.linkedin.com/in/alexander-schuppe/)  
 
+                Sie finden das GitHub-Repository zu diesem Dashboard unter: [Repository](https://github.com/alexmahesh/Crime_GER/tree/main).  
+
                 Wenn sie Interesse an unserer Arbeit haben, kontaktieren sie uns gerne.  
                 """)
 
