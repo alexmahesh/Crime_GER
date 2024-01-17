@@ -104,14 +104,13 @@ with col2:
     st.markdown("""
                 Verantwortlich für den Inhalt:  
                 Johanna Köpke  
-                Ernst-Horn-Str. 18b  
-                22525 Hamburg   
                 Email:  johanna.kpk@googlemail.com  
 
                 Julie Laur  
-                Schanzenstr. 33a  
-                20357 Hamburg   
                 Email:  julie.laur@gmx.de   
+
+                Alexander Schuppe
+                Email: mail@alexanderschuppe.de 
                 
                 """)
     
