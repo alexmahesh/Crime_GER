@@ -112,10 +112,6 @@ with col2:
                 20357 Hamburg   
                 Email:  julie.laur648@gmx.de  
 
-                Alexander Schuppe  
-                Eimsbütteler Chaussee 85  
-                20259 Hamburg  
-                Email: mail@alexanderschuppe.de  
                 """)
     
     # Privacy policy
