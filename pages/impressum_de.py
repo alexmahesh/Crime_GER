@@ -112,11 +112,6 @@ with col2:
                 Schanzenstr. 33a  
                 20357 Hamburg   
                 Email:  julie.laur@gmx.de   
-
-                Alexander Schuppe  
-                Eimsbütteler Chaussee 85  
-                20259 Hamburg  
-                Email: mail@alexanderschuppe.de  
                 
                 """)
     
